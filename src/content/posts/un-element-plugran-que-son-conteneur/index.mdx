@@ -15,11 +15,11 @@ En css on a parfois besoin de permettre à un élément d'être plus grand que s
 
 Et force est de constater que, lorsque cette règle n'est pas appliquée, la lecture est désagréable. Prenons l'exemple de wikipédia, voici à quoi ressemble un article :
 
-![coucou](src/content/assets/posts/full-bleed-layout/wikipedia.jpeg)
+![coucou](./wikipedia.jpeg)
 
 La même page avec des paragraphes d'une largeur maximum de 66 caractères :
 
-![](src/content/assets/posts/full-bleed-layout/wikipedia-2.jpeg)
+![](./wikipedia-2.jpeg)
 
 Pour contraindre la longueur des lignes on peut utiliser l'unité `ch` qui correspond à la largeur d'un caractère `0`.
 
@@ -75,15 +75,15 @@ En plus de tenir en quelques lignes, elle a l'avantage de ne pas être contraign
 
 Le fonctionnement est plutôt simple. On commence par définir une largeur de `100vw`, ainsi l'élément prend la largeur de l'écran, peu importe la largeur de ses parents. Cependant, sa position reste inchangée. Il s'agit donc de rammener son côté gauche au bord de l'écran.
 
-![](src/content/assets/posts/full-bleed-layout/margin-0.png)
+![](./margin-0.png)
 
 En ajoutant une marge de `50%` (de l'élément parent), le bord gauche de notre élément `breakout` se retrouve au centre de l'écran, on peut ensuite soustraire `50vw`, soit la moitié de la largeur de l'écran.
 
-![](src/content/assets/posts/full-bleed-layout/margin-1.png)
+![](./margin-1.png)
 
 Et notre élément se retrouve correctement positionné!
 
-![](src/content/assets/posts/full-bleed-layout/margin-2.png)
+![](./margin-2.png)
 
 Malgré tous ses avantages, cette méthode présente quelques limites:
 - Le conteneur doit être centré
@@ -148,7 +148,7 @@ Cette dernière méthode est présentée sur le blog de [Josh Comeau](https://ww
 
 Le principe ici est de créer une grille de 3 colonnes, la colonne prendra une largeur de `66ch` ou de `100%` si la largeur de la page est inférieure à `66ch`. Les deux autres colonnes vont quand à elles se partager l'espace restant.
 
-![](src/content/assets/posts/full-bleed-layout/grid.png)
+![](./grid.png)
 
 Il ne reste plus qu'à placer tous les enfants de notre `wrapper` dans la seconde colonne. Si on souhaite qu'un élément utilise toute la largeur de l'écran, il suffit de modifier sa valeur pour `grid-column`:
 
