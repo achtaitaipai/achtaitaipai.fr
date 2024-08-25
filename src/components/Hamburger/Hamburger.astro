@@ -55,10 +55,12 @@ import Icon from "./_Icon.astro";
         });
         document.addEventListener("keydown", this.#handleKeydown);
         this.#btn.setAttribute("aria-expanded", "true");
+        document.documentElement.setAttribute("data-menu-open","true")
       }
 
       async #close() {
         this.#btn.setAttribute("aria-expanded", "false");
+        document.documentElement.setAttribute("data-menu-open","false")
         document.removeEventListener("keydown", this.#handleKeydown);
         await animate(this.#wrapper, {
           transform: ["translateX(0)", "translateX(100%)"],
@@ -70,6 +72,10 @@ import Icon from "./_Icon.astro";
 </script>
 
 <style>
+  :global([data-menu-open="true"]){
+    overflow: hidden;
+  }
+
   nav {
     z-index: 1;
   }
@@ -81,6 +87,7 @@ import Icon from "./_Icon.astro";
     color: var(--gray-1);
   }
   ul {
+    position: fixed;
     z-index: -1;
     display: grid;
     align-content: center;
