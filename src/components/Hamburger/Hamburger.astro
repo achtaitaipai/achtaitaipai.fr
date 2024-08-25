@@ -1,5 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import Icon from "./_Icon.astro";
+
+const pages = await getCollection("pages")
 ---
 
 <c-hamburger>
@@ -8,9 +11,11 @@ import Icon from "./_Icon.astro";
       <Icon />
     </button>
     <ul role="list" style="display: none;">
-      <li><a href="#">Accueil</a></li>
-      <li><a href="#">À propos</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="/">Accueil</a></li>
+      {pages.map(el=>(
+        <li><a href={`/${el.slug}`}>{el.data.title}</a></li>
+      ))}
+      <li><a href="mailto:slt@charlescailleteau.com">Contact</a></li>
     </ul>
   </nav>
 </c-hamburger>

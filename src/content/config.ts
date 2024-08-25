@@ -9,4 +9,10 @@ export const collections = {
 			description: z.string().optional(),
 		}),
 	}),
+	pages: defineCollection({
+		type: "content",
+		schema: z.object({
+			title: z.string()
+		})
+	})
 }

@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Aside from "src/components/Aside.astro";
+import Now from "src/components/Now.astro";
+import Prose from "src/components/Prose.astro";
+import Base from "src/layouts/Base.astro";
+
+const {page:slug} = Astro.params
+
+const entry = await getEntry("pages",slug)
+const {Content} = await entry.render()
+
+export const getStaticPaths = (async () => {
+    const pages = await getCollection("pages")
+    return pages.map(el=>({params:{page:el.slug}}));
+}) satisfies GetStaticPaths;
+---
+
+<Base title="À propos">
+    <main>
+        <article>
+            <Prose {Content}/>
+        </article>
+    </main>
+</Base>
