@@ -1,0 +1,115 @@
+---
+import Icon from "./_Icon.astro";
+---
+
+<c-hamburger>
+  <nav role="navigation" aria-label="Menu principal">
+    <button aria-expanded="false" title="Menu">
+      <Icon />
+    </button>
+    <ul role="list" style="display: none;">
+      <li><a href="#">Accueil</a></li>
+      <li><a href="#">À propos</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</c-hamburger>
+
+<script>
+  import { animate } from "motion";
+  customElements.define(
+    "c-hamburger",
+    class Hamburger extends HTMLElement {
+      #btn: HTMLButtonElement;
+      #wrapper: HTMLElement;
+      #isOpen = false;
+
+      constructor() {
+        super();
+        this.#btn = this.querySelector("button")!;
+        this.#wrapper = this.querySelector("ul")!;
+      }
+
+      connectedCallback() {
+        this.#btn.addEventListener("click", this.#handleClick);
+      }
+
+      disconnectedCallback() {
+        this.#btn.removeEventListener("click", this.#handleClick);
+      }
+
+      #handleClick = () => {
+        this.#isOpen = !this.#isOpen;
+        if (this.#isOpen) this.#open();
+        else this.#close();
+      };
+
+      #handleKeydown = (e: KeyboardEvent) => {
+        if (e.code === "Escape") this.#close();
+      };
+
+      #open() {
+        this.#wrapper.style.removeProperty("display");
+        animate(this.#wrapper, {
+          transform: ["translateX(100%)", "translateX(0)"],
+        });
+        document.addEventListener("keydown", this.#handleKeydown);
+        this.#btn.setAttribute("aria-expanded", "true");
+      }
+
+      async #close() {
+        this.#btn.setAttribute("aria-expanded", "false");
+        document.removeEventListener("keydown", this.#handleKeydown);
+        await animate(this.#wrapper, {
+          transform: ["translateX(0)", "translateX(100%)"],
+        }).finished;
+        this.#wrapper.style.setProperty("display", "none");
+      }
+    }
+  );
+</script>
+
+<style>
+  nav {
+    z-index: 1;
+  }
+  button {
+    z-index: 9999;
+    transition: color 0.4s;
+  }
+  button[aria-expanded="true"] {
+    color: var(--gray-1);
+  }
+  ul {
+    z-index: -1;
+    display: grid;
+    align-content: center;
+    gap: var(--space-xl);
+    height: 100%;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: var(--gray-12);
+    width: 50vw;
+    font-size: var(--step-4);
+  }
+
+  li {
+    padding-inline: var(--space-xl);
+  }
+
+  nav a {
+    color: var(--gray-1);
+    text-decoration: none;
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translate(100%, 0);
+    }
+    to {
+      transform: translate(0);
+    }
+  }
+</style>

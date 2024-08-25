@@ -1,0 +1,62 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Aside from "src/components/Aside.astro";
+import Pagination from "src/components/Pagination.astro";
+import Prose from "src/components/Prose.astro";
+import Base from "src/layouts/Base.astro";
+import { displayDate } from "src/libs/date.ts";
+
+const { post: slug } = Astro.params;
+
+const entries = (await getCollection("posts")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const entry = await getEntry("posts", slug);
+const entryIndex = entries.findIndex((el) => el.slug === slug);
+
+const { title, date } = entry.data;
+const { Content } = await entry.render();
+
+const before = entries[entryIndex - 1];
+const after = entries[entryIndex + 1];
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("posts");
+  return entries.map((el) => ({ params: { post: el.slug } }));
+}) satisfies GetStaticPaths;
+---
+
+<Base title="">
+  <article>
+    <header class="container">
+      <h1>{title}</h1>
+      <time datetime={date.toDateString()}>{displayDate(date)}</time>
+    </header>
+    <Prose>
+      <Content components={{ Aside }} />
+    </Prose>
+    <Pagination before={before ? {url:`/blog/${before.slug}`, title:before.data.title} : undefined} after={after ? {url:`/blog/${after.slug}`, title:after.data.title} : undefined}/>
+  </article>
+</Base>
+
+<style>
+  article {
+    padding-block: var(--space-2xl);
+  }
+
+  header {
+    margin-block-end: var(--space-2xl);
+  }
+
+  header h1 {
+    font-size: var(--step-7);
+  }
+
+  header time {
+    display: block;
+    color: var(--gray-10);
+    margin-block-start: var(--space-xs);
+  }
+</style>

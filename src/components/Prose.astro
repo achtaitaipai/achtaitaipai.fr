@@ -1,0 +1,106 @@
+<section class="prose flow container mx-auto">
+  <slot />
+</section>
+
+<style is:global>
+  .prose img {
+    --width: var(--breakout-width);
+    --flow-space: var(--space-l);
+    height: auto;
+    border: 1px solid var(--gray-6);
+    transform-origin: center bottom;
+    animation-name: fade-in;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  .prose img + * {
+    --flow-space: var(--space-l);
+  }
+
+  .prose > :where(aside, img, .expressive-code) {
+    --width: var(--popout-width);
+    --flow-space: var(--space-l);
+  }
+
+  .prose > :where(aside, img, .expressive-code) + * {
+    --flow-space: var(--space-l);
+  }
+
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    --flow-space: var(--space-l);
+  }
+
+  .prose a {
+    color: var(--text-black);
+    text-decoration: none;
+    border-block-end: 2px solid;
+    transition: color 0.2s;
+  }
+
+  .prose a:hover,
+  .prose a:focus-visible {
+    color: var(--accent);
+  }
+
+  .prose :not(pre) > code {
+    background-color: var(--gray-4);
+    border-radius: .2rem;
+    padding: 0.2rem;
+  }
+
+  .prose hr {
+    border: none;
+    border-block-start: 1px solid var(--gray-6);
+  }
+
+  .prose blockquote {
+    position: relative;
+    padding-block: var(--space-xs);
+    font-size: var(--step-1);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--gray-11);
+  }
+
+  .prose blockquote :first-child {
+    text-indent: 2.3rem;
+  }
+
+  .prose blockquote::before {
+    content: "“";
+    position: absolute;
+    top: 0;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 4rem;
+  }
+
+  .prose blockquote > * + * {
+    margin-block-start: 1em;
+  }
+
+  .prose li + li {
+    margin-block-start: 0.8em;
+  }
+
+  .prose li > ul {
+    margin-block-start: 0.8em;
+  }
+
+  @keyframes fade-in {
+    from{
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+  }
+</style>

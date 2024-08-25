@@ -1,0 +1,24 @@
+---
+title: Des jolis logs
+date: 2024-08-12
+description: Comment styliser les logs dans le navigateurs
+---
+
+Je l'ignorais avant-hier, mais, en javascript, il est possible de styliser les logs dans la plupart des navigateurs.
+
+La syntaxe est étrange, pour écrire "Bonjour monde" avec "monde" en `hotpink` ça ressemble à ça : 
+
+```js
+console.log('Bonjour %cmonde','color: hotpink')
+```
+
+La directive `%c` permet de définir à partir de quand le style s'applique.\
+Le style sera appliqué jusqu'au `%c` suivant, ou à défaut jusqu'à la fin.
+
+Il est aussi possible d'appliquer des styles différents à différents fragments :
+
+```js
+console.log('%cBonjour %cmonde', 'font-weight: bold', 'font-weight: bold; color: hotpink')
+```
+
+[→ La page MDN sur le sujet](https://developer.mozilla.org/en-US/docs/Web/API/console#styling_console_output)
