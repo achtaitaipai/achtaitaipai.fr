@@ -85,14 +85,19 @@ import Icon from "./_Icon.astro";
     display: grid;
     align-content: center;
     gap: var(--space-xl);
-    height: 100%;
     height: 100vh;
     position: fixed;
     right: 0;
     top: 0;
     background: var(--gray-12);
-    width: 50vw;
+    width: 100vw;
     font-size: var(--step-4);
+  }
+
+  @media (width > 60rem){
+    ul {
+      width: 50vw;
+    }
   }
 
   li {
