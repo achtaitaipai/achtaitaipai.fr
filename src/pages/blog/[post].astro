@@ -27,7 +27,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 ---
 
-<Base title="">
+<Base title={entry.data.title}>
   <article>
     <header class="container">
       <h1>{title}</h1>
