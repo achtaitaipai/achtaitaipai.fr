@@ -2,7 +2,6 @@
 import type { GetStaticPaths } from "astro";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import Aside from "src/components/Aside.astro";
 import Pagination from "src/components/Pagination.astro";
 import Prose from "src/components/Prose.astro";
 import Base from "src/layouts/Base.astro";
@@ -34,9 +33,7 @@ export const getStaticPaths = (async () => {
       <h1>{title}</h1>
       <time datetime={date.toDateString()}>{displayDate(date)}</time>
     </header>
-    <Prose>
-      <Content components={{ Aside }} />
-    </Prose>
+    <Prose {Content}/>
     <Pagination before={before ? {url:`/blog/${before.slug}`, title:before.data.title} : undefined} after={after ? {url:`/blog/${after.slug}`, title:after.data.title} : undefined}/>
   </article>
 </Base>

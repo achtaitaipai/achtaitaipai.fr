@@ -1,5 +1,16 @@
+---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
+import Aside from './Aside.astro'
+import Now from './Now.astro'
+
+export type Props = {
+  Content: AstroComponentFactory
+}
+
+const {Content} = Astro.props
+---
 <section class="prose flow container mx-auto">
-  <slot />
+  <Content components={{Aside, Now}}/>
 </section>
 
 <style is:global>
