@@ -61,7 +61,7 @@ const entries = (await getCollection("posts")).sort((a,b)=>b.data.date.getTime()
 		a::before{
 			content: "";
 			height: 1px;
-			background: #000;
+			background: var(--gray-6);
 			flex-grow: 1;
 		}
 	}
