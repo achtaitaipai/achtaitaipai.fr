@@ -16,6 +16,7 @@ export default defineConfig({
     themeCssSelector: theme => theme.name.includes("light") ? '' : '.dark',
     styleOverrides: {
       borderRadius: 0,
+      codeBackground:"var(--gray-1)",
       frames: {
         shadowColor: "transparent"
       }
