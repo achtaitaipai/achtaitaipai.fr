@@ -6,21 +6,21 @@ description: Quelques notes sur l'opérateur % et ses différences avec le modul
 
 import Anim from "./_Anim.svelte"
 
-J'ai eu envie d'écrire ce petit article après la lecture de celui de  [Josh Comeau](https://www.joshwcomeau.com/javascript/modulo-operator/), sur le même sujet. D'abord parcequ'il est excellent, mais aussi par envie d'ajouter quelques informations et précisions.
+J'ai eu envie d'écrire ce petit article après la lecture de celui de  [Josh Comeau](https://www.joshwcomeau.com/javascript/modulo-operator/), sur le même sujet. D'abord parce qu'il est excellent, mais aussi par envie d'y ajouter quelques informations et précisions.
 
 ## Qu'est-ce qu'un opérateur ?
 
-En programmation un opérateur consiste en un symbole ou une suite de symbole, qui indique au compilateur ou interpréteur qu'il doit effectuer une opération. Chaque langage a ses propres opérateurs et même s'ils ons souvent une syntaxte symilaires, il existe aussi des différences.
+En programmation, un opérateur est un symbole ou une suite de symboles qui indique au compilateur ou à l'interpréteur qu'il doit effectuer une opération. Chaque langage a ses propres opérateurs et même s'ils ons souvent une syntaxe symilaire, il existe également des différences.
 
 Par exemple, dans le cas de javascript :
 
-- l'opérateur `===` inidique à l'interpréteur qu'il doit comparer la valeur de gauche est celle de droite
+- l'opérateur `===` indique à l'interpréteur qu'il doit comparer la valeur de gauche à celle de droite
 - l'opérateur `+` indique à l'interpréteur qu'il doit retourner la somme des deux valeurs.
--  l'opérateur `??` indique à l'interpréteur qu'il doit retourner la valeur de gauche si elle est différente de `null` et de `undefined` et la valeur de droite dans le cas contraire.
+-  l'opérateur `??` indique à l'interpréteur qu'il doit retourner la valeur de gauche si elle est différente de `null` ou de `undefined` et la valeur de droite dans le cas contraire.
 
 ## L'opérateur %
 
-Pour ce qui est de l'opérateur `%`, il retournera le reste de la division de la valeur de gauche par la valeur de droite.
+Pour ce qui est de l'opérateur `%`, il retourne le reste de la division de la valeur de gauche par la valeur de droite.
 
 Par exemple:
 
@@ -28,11 +28,11 @@ Par exemple:
 - `4 % 1` retournera `0`car `4 = 4 x 1 + 0`
 - `-5 % 2` retournera `-1`car `-5 = -2 x 2 + -1`
 
-## Utilisations courrantes
+## Utilisations courantes
 
 ### Savoir si un nombre est pair
 
-Pour savoir si un nombre est pair notre opérateur peut se montrer bien utile:
+Pour savoir si un nombre est pair notre opérateur est bien utile:
 
 ```js
 const isEven = (n) => n % 2 === 0
@@ -62,7 +62,7 @@ const fizzBuzz = (n) => {
 
 Mettons qu'on veuille jouer une animation, à l'aide de javascript. Cette animation sera composée des emojis suivants: 🕛🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛
 
-Un bouton `+`, nous permettra de passer à la sprite suivante, et lorsqu'on passera la dernière sprite on reviendra à la première.
+Un bouton `+` nous permettra de passer à la sprite suivante, et lorsqu'on passera la dernière sprite on reviendra à la première.
 
 Le code pourrait ressembler à quelque chose comme ceci :
 
@@ -80,16 +80,20 @@ function next(){
 
 ## Le piège de l'opérateur %
 
-On se rend compte des limites de notre cher opérateur lorsqu'on s'imagine ajouter un bouton `-`. En effet, on voudrait que notre belle animation boucle dans les deux sens. Or en javascript `-1 % 12`, retourne `-1` et non pas `11` comme on le voudrait.
+On se rend compte des limites de cet opérateur lorsqu'on s'imagine ajouter un bouton `-`. En effet, on voudrait que notre belle animation boucle dans les deux sens. Or en javascript `-1 % 12`, retourne `-1` et non pas `11` comme on le voudrait.
 
-Si on jette une oeil à [la documentation MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Remainder), on se rend compte que c'est le résultat qu'on obtiendrait avec un opérateur `modulo` et non pas `reste`, malheureusement cet opérateur n'existe pas en javascript. Pour y remédier on peut écrire la petite fonction utilitaire proposée par la documentation :
+Si on jette une œil à [la documentation MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Remainder), on se rend compte que c'est le résultat qu'on obtient avec un opérateur `modulo` et non pas `reste`, malheureusement cet opérateur n'existe pas en javascript. Pour y remédier on peut écrire la petite fonction utilitaire proposée par la documentation :
+
+<Aside>
+Dans certains autres langages, comme Python ou Ruby, l'opérateur % se comporte comme un opérateur modulo, qui garantit toujours un résultat positif, même avec des nombres négatifs. Cette différence peut entraîner des comportements inattendus lorsque vous portez du code d'un langage à un autre ou lorsque vous développez des algorithmes où le signe du résultat est important.
+</Aside>
 
 ```js 
 const SPRITES = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚']
 let current = 0
 
 function modulo(value, mod){
-    return ((val % mod ) + mod ) % mod
+    return ((value % mod ) + mod ) % mod
 }
 
 function next(value){

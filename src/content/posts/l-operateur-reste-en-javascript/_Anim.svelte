@@ -6,7 +6,7 @@
     const modulo = (a:number, n:number)=>((a % n ) + n ) % n
 </script>
 
-<div class="container">
+<figure class="container">
     <div class="anim">
         {#if lessBtn}
             <button on:click={() => incr(-1)}>
@@ -24,7 +24,7 @@
               
         </button>
     </div>
-</div>
+</figure>
 
 <style>
     .anim {
