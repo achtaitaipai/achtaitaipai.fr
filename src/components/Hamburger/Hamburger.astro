@@ -7,6 +7,7 @@ const pages = await getCollection("pages");
 ---
 
 <c-hamburger>
+  <div class="backdrop" style="display: none;" aria-hidden="true"></div>
   <nav role="navigation" aria-label="Menu principal">
     <button aria-expanded="false" title="Menu">
       <Icon />
@@ -24,63 +25,90 @@ const pages = await getCollection("pages");
         <li><a href="mailto:slt@charlescailleteau.com">Contact</a></li>
       </ul>
       <div class="themeSwitch">
-        <ThemeSwitch/>
+        <ThemeSwitch />
       </div>
     </div>
   </nav>
 </c-hamburger>
 
 <script>
-  import { animate } from "motion";
+  import { animate, timeline } from "motion";
   customElements.define(
     "c-hamburger",
     class Hamburger extends HTMLElement {
       #btn: HTMLButtonElement;
       #wrapper: HTMLElement;
       #isOpen = false;
+      #backdrop: HTMLElement;
 
       constructor() {
         super();
         this.#btn = this.querySelector("button")!;
         this.#wrapper = this.querySelector(".menu")!;
+        this.#backdrop = this.querySelector(".backdrop")!;
       }
 
       connectedCallback() {
-        this.#btn.addEventListener("click", this.#handleClick);
+        this.#btn.addEventListener("click", this.#handleBtnClick);
       }
 
       disconnectedCallback() {
-        this.#btn.removeEventListener("click", this.#handleClick);
+        this.#btn.removeEventListener("click", this.#handleBtnClick);
+        document.removeEventListener("keydown", this.#handleKeydown);
       }
 
-      #handleClick = () => {
-        this.#isOpen = !this.#isOpen;
-        if (this.#isOpen) this.#open();
+      #handleBtnClick = (e:MouseEvent) => {
+        if (!this.#isOpen) this.#open();
         else this.#close();
+        e.stopPropagation()
       };
 
       #handleKeydown = (e: KeyboardEvent) => {
         if (e.code === "Escape") this.#close();
       };
 
+      #handleClick = (e: MouseEvent) => {
+				if (
+					(!this.#wrapper.contains(e.target as Node))
+				) {
+          e.preventDefault()
+					this.#close()
+				}else{
+          console.log(e.target)
+        }
+			}
+
       #open() {
+        this.#isOpen = true;
         this.#wrapper.style.removeProperty("display");
+        this.#backdrop.style.removeProperty("display");
         animate(this.#wrapper, {
           transform: ["translateX(100%)", "translateX(0)"],
         });
+        animate(this.#backdrop, {
+          opacity: [0, 1],
+        });
         document.addEventListener("keydown", this.#handleKeydown);
+        document.addEventListener("click",this.#handleClick)
         this.#btn.setAttribute("aria-expanded", "true");
         document.documentElement.setAttribute("data-menu-open", "true");
       }
 
       async #close() {
+        this.#isOpen = false;
         this.#btn.setAttribute("aria-expanded", "false");
         document.documentElement.setAttribute("data-menu-open", "false");
+        document.removeEventListener("click",this.#handleClick)
         document.removeEventListener("keydown", this.#handleKeydown);
-        await animate(this.#wrapper, {
-          transform: ["translateX(0)", "translateX(100%)"],
-        }).finished;
+        await timeline([
+          [this.#wrapper,
+          {
+            transform: ["translateX(0)", "translateX(100%)"],
+          },],
+          [this.#backdrop, {opacity:[1,0]}, {at:"<"}]
+        ]).finished;
         this.#wrapper.style.setProperty("display", "none");
+        this.#backdrop.style.setProperty("display", "none");
       }
     }
   );
@@ -90,17 +118,23 @@ const pages = await getCollection("pages");
   :global([data-menu-open="true"]) {
     overflow: hidden;
   }
-
-  nav {
-    z-index: 1;
+  .backdrop {
+    background: var(--gray-a12);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
   }
   button {
+    position: relative;
     z-index: 9999;
     transition: color 0.4s;
   }
-  .menu{
+  .menu {
     position: fixed;
-    z-index: -1;
+    z-index: 1;
     height: 100vh;
     right: 0;
     top: 0;
@@ -130,14 +164,14 @@ const pages = await getCollection("pages");
   nav a {
     color: var(--gray-11);
     text-decoration: none;
-    transition: color .2s;
+    transition: color 0.2s;
   }
 
-  nav a:where(:hover,:focus-visible){
+  nav a:where(:hover, :focus-visible) {
     color: var(--gray-12);
   }
 
-  .themeSwitch{
+  .themeSwitch {
     position: absolute;
     right: 0;
     bottom: 0;
