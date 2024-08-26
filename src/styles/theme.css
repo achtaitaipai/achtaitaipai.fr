@@ -8,10 +8,10 @@
 @import "@radix-ui/colors/yellow-dark.css";
 
 :root {
-	--main-width:min(100% - var(--space-l), 50rem);
-	--popout-width:min(100% - var(--space-l), 52rem);
-	--breakout-width:min(100% - var(--space-l), 55rem);
-	--wide-width:min(100% - var(--space-l), 70rem);
+	--main-width:min(100% - var(--space-xl), 50rem);
+	--popout-width:min(100% - var(--space-xl), 52rem);
+	--breakout-width:min(100% - var(--space-xl), 55rem);
+	--wide-width:min(100% - var(--space-xl), 70rem);
 
 	/* @link https://utopia.fyi/type/calculator?c=320,16,1.2,1240,18,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 	--step--2: clamp(0.6944rem, 0.6856rem + 0.0444vw, 0.72rem);
