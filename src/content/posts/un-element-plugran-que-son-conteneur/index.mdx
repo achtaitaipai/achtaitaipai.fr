@@ -9,7 +9,7 @@ En css on a parfois besoin de permettre à un élément d'être plus grand que s
 ## Un peu de contexte
 
 *The Elements of Typographic Style* de Robert Bringhurst ~que je n'ai pas lu~, recommande une longueur de ligne comprise entre 45 et 75 caractères.
-> On considère généralement qu'une longueur de ligne allant de 45 à 75 caractères est satisfaisante pour une page à une seule colonne avec une police de texte à empattement et une taille de texte standard. Une ligne de 66 caractères (en comptant à la fois les lettres et les espaces) est largement considérée comme idéale. Pour un travail en colonnes multiples, une moyenne plus appropriée se situe entre 40 et 50 caractères.
+> On considère généralement qu'une longueur de ligne allant de 45 à 75 caractères est satisfaisante pour une page à une seule colonne avec une police de texte à empattement et une taille de texte standard. Une ligne de 66 caractères (en comptant à la fois les lettres et les espaces) est largement considérée comme idéale.
 
  Aucune idée de comment il est arrivé à ces chiffres, mais il semble que cette règle fasse à peu près consensus chez les gens qui se posent la question. 
 
@@ -51,7 +51,7 @@ Une première possibilité serait d'appliquer une marge négative. Ça pourrait 
 }
 ```
 
-De cette façon, notre élément `breakout` sera plus large de 4ch (2 x 2ch), malheureusement cet méthode n'est pas responsive. Il sera nécessaire d'ajouter une `media querie` pour être certain de ne pas avoir de débordement.
+De cette façon, notre élément `breakout` sera plus large de 4ch (2 x 2ch), malheureusement ça n'est pas responsive. Il sera nécessaire d'ajouter une `media querie` pour être certain de ne pas avoir de débordement.
 
 ```css
 @media(min-width: 72ch){
@@ -63,7 +63,7 @@ De cette façon, notre élément `breakout` sera plus large de 4ch (2 x 2ch), ma
 
 Si cette méthode peut fonctionner dans des cas simples, on peut vite se trouver limiter. Mettons qu'on veuille avoir plusieurs largeur différentes, le code deviendrait vite redondant. De plus, on ne peut pas avoir un élément qui prenne toute la largeur de l'écran.
 
-Pour ce faire on peut utiliser cette autre méthode que j'ai découverte sur [le site d'Andy Bell](https://piccalil.li/blog/creating-a-full-bleed-css-utility).
+Pour ce faire on peut utiliser cette autre méthode que j'ai découverte sur le site d'Andy Bell.
 ```css
 .breakout {
   width: 100vw;
@@ -85,7 +85,7 @@ Et notre élément se retrouve correctement positionné!
 
 ![](./margin-2.png)
 
-Malgré tous ses avantages, cette méthode présente quelques limites:
+Malgré tous ses avantages, cette méthode présente des limites:
 - Le conteneur doit être centré
 - Elle provoque un débordement, il faut donc ajouter la règle `overflow-x: hidden;` au body.
 
@@ -102,7 +102,7 @@ Il se trouvre qu'en `css` cette phrase se dit:
 }
 ```
 
-Cette solution est présentée sur le blog de [Kilian Valkhof](https://kilianvalkhof.com/2020/css-html/full-bleed-layout-using-simple-css/). 
+Cette solution est présentée sur le blog de Kilian Valkhof. 
 
 Ici, tout tient dans le sélecteur `.wrapper > *:not(.breakout)`
 - Le combinateur [`>`](https://developer.mozilla.org/fr/docs/Web/CSS/Child_combinator) permet de sélectionner tous Les enfants **directs** de `.wrapper`
@@ -133,7 +133,7 @@ Difficile de faire plus simple, c'est lisible, pas de trick étrange et c'est ex
 
 ## 3. Derrière la grille
 
-Cette dernière méthode est présentée sur le blog de [Josh Comeau](https://www.joshwcomeau.com/css/full-bleed/).
+Cette dernière méthode est présentée sur le blog de Josh Comeau.
 
 ```css
 .wrapper {
@@ -168,3 +168,12 @@ Bien sûr, malgré tous ces avantages, il y a quelques défauts:
 - L'emploi du `display: grid;` modifie certains comportement "naturels":
   - impossible d'utiliser des `display: float;`
   - les marges ne fusionnent plus.
+
+## Quelques ressources utiles
+
+- [**Creating a full bleed CSS utility**, un article *d'Andy Bell*](https://piccalil.li/blog/creating-a-full-bleed-css-utility).
+- [**Full bleed layout using simple CSS**, un article de *Kilian Valkhof*](https://kilianvalkhof.com/2020/css-html/full-bleed-layout-using-simple-css/)
+- [**Full-Bleed Layout Using CSS Grid**, un article de Josh Comeau](https://www.joshwcomeau.com/css/full-bleed/)
+- [**Layout breakouts**, un article de *Ryan Mulligan*](https://ryanmulligan.dev/blog/layout-breakouts/)
+- [**A new approach to container and wrapper classes** une vidéo de *Kevin Powell*](https://www.youtube.com/watch?v=c13gpBrnGEw)
+- [**Smol Breakout Grid**, un article de *Stephanie Eckles*](https://smolcss.dev/#smol-breakout-grid)
