@@ -1,8 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import Icon from "./_Icon.astro";
+import ThemeSwitch from "../ThemeSwitch.astro";
 
-const pages = await getCollection("pages")
+const pages = await getCollection("pages");
 ---
 
 <c-hamburger>
@@ -10,13 +11,22 @@ const pages = await getCollection("pages")
     <button aria-expanded="false" title="Menu">
       <Icon />
     </button>
-    <ul role="list" style="display: none;">
-      <li><a href="/">Accueil</a></li>
-      {pages.map(el=>(
-        <li><a href={`/${el.slug}`}>{el.data.title}</a></li>
-      ))}
-      <li><a href="mailto:slt@charlescailleteau.com">Contact</a></li>
-    </ul>
+    <div class="menu" style="display: none;">
+      <ul role="list">
+        <li><a href="/">Accueil</a></li>
+        {
+          pages.map((el) => (
+            <li>
+              <a href={`/${el.slug}`}>{el.data.title}</a>
+            </li>
+          ))
+        }
+        <li><a href="mailto:slt@charlescailleteau.com">Contact</a></li>
+      </ul>
+      <div class="themeSwitch">
+        <ThemeSwitch/>
+      </div>
+    </div>
   </nav>
 </c-hamburger>
 
@@ -32,7 +42,7 @@ const pages = await getCollection("pages")
       constructor() {
         super();
         this.#btn = this.querySelector("button")!;
-        this.#wrapper = this.querySelector("ul")!;
+        this.#wrapper = this.querySelector(".menu")!;
       }
 
       connectedCallback() {
@@ -60,12 +70,12 @@ const pages = await getCollection("pages")
         });
         document.addEventListener("keydown", this.#handleKeydown);
         this.#btn.setAttribute("aria-expanded", "true");
-        document.documentElement.setAttribute("data-menu-open","true")
+        document.documentElement.setAttribute("data-menu-open", "true");
       }
 
       async #close() {
         this.#btn.setAttribute("aria-expanded", "false");
-        document.documentElement.setAttribute("data-menu-open","false")
+        document.documentElement.setAttribute("data-menu-open", "false");
         document.removeEventListener("keydown", this.#handleKeydown);
         await animate(this.#wrapper, {
           transform: ["translateX(0)", "translateX(100%)"],
@@ -77,7 +87,7 @@ const pages = await getCollection("pages")
 </script>
 
 <style>
-  :global([data-menu-open="true"]){
+  :global([data-menu-open="true"]) {
     overflow: hidden;
   }
 
@@ -88,26 +98,27 @@ const pages = await getCollection("pages")
     z-index: 9999;
     transition: color 0.4s;
   }
-  button[aria-expanded="true"] {
-    color: var(--gray-1);
-  }
-  ul {
+  .menu{
     position: fixed;
     z-index: -1;
+    height: 100vh;
+    right: 0;
+    top: 0;
+    width: 100vw;
+  }
+
+  ul {
+    height: 100%;
     display: grid;
     align-content: center;
     gap: var(--space-xl);
-    height: 100vh;
-    position: fixed;
-    right: 0;
-    top: 0;
-    background: var(--gray-12);
-    width: 100vw;
+    background: var(--gray-2);
     font-size: var(--step-4);
+    border-inline-start: 1px solid var(--gray-5);
   }
 
-  @media (width > 60rem){
-    ul {
+  @media (width > 60rem) {
+    .menu {
       width: 50vw;
     }
   }
@@ -117,16 +128,18 @@ const pages = await getCollection("pages")
   }
 
   nav a {
-    color: var(--gray-1);
+    color: var(--gray-11);
     text-decoration: none;
+    transition: color .2s;
   }
 
-  @keyframes slide-in {
-    from {
-      transform: translate(100%, 0);
-    }
-    to {
-      transform: translate(0);
-    }
+  nav a:where(:hover,:focus-visible){
+    color: var(--gray-12);
+  }
+
+  .themeSwitch{
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
 </style>
