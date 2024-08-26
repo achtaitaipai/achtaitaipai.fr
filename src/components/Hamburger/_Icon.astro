@@ -1,7 +1,8 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
     <path d="M 0 50 L 50 50" class="top left"/>
     <path d="M 50 50 L 100 50" class="top right"/>
-    <path d="M 0 50 L 100 50" class="middle"/>
+    <path d="M 0 50 L 50 50" class="middle left"/>
+    <path d="M 50 50 L 100 50" class="middle right"/>
     <path d="M 0 50 L 50 50" class="bottom left"/>
     <path d="M 50 50 L 100 50" class="bottom right"/>
   </svg>
@@ -37,12 +38,16 @@ svg{
   }
   
   .middle {
-    opacity: 1;
-    transition: opacity 0.2s;
+    transform: translateX(0);;
+    transition: transform 0.3s;
   }
   
-  :global([aria-expanded="true"]) .middle {
-    opacity: 0;
+  :global([aria-expanded="true"]) .middle.left {
+    transform: translateX(-50%);
+  }
+  
+  :global([aria-expanded="true"]) .middle.right {
+    transform: translateX(50%);
   }
 
 
