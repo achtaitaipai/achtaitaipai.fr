@@ -15,17 +15,17 @@
   ];
   let current = 0;
 
-  function modulo(value:number, mod:number) {
+  function modulo(value: number, mod: number) {
     return ((value % mod) + mod) % mod;
   }
 
-  function update(incrementation:number) {
+  function update(incrementation: number) {
     current = modulo(current + incrementation, SPRITES.length);
   }
   export let lessBtn = false;
 </script>
 
-<figure class="container">
+<figure class="">
   <div class="anim">
     {#if lessBtn}
       <button on:click={() => update(-1)}>
@@ -64,16 +64,22 @@
 </figure>
 
 <style>
+  figure {
+    max-width: var(--popout-width);
+    margin-inline: auto;
+    margin-block: var(--space-xl);
+    padding-block: var(--space-m);
+    border: 1px solid var(--gray-6);
+    text-align: center;
+  }
   .anim {
     --main-width: var(--popout-width);
-    text-align: center;
-    display: grid;
+    display: inline-grid;
     justify-content: center;
+    grid-template-columns: 1fr auto 1fr;
     grid-auto-flow: column;
     gap: var(--space-m);
-    align-items: center;
-    margin-block: var(--space-xl);
-    border: 1px solid var(--gray-6);
+    place-items: center;
   }
 
   button {
@@ -84,6 +90,7 @@
     font-size: var(--step-1);
     color: var(--gray-11);
     transition: all 0.2s;
+    border-radius: 99999em;
   }
 
   button:where(:hover, :focus-visible) {
@@ -92,7 +99,12 @@
     color: var(--gray-12);
   }
 
+  button:last-child {
+    grid-column: -2;
+  }
+
   .display {
     font-size: var(--step-5);
+    grid-column: 2;
   }
 </style>

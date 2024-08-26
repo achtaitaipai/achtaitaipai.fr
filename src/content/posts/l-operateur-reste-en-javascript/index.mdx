@@ -83,26 +83,23 @@ function update(){
 
 ## Le piège de l'opérateur %
 
-On se rend compte des limites de cet opérateur lorsqu'on s'imagine ajouter un bouton `-`. En effet, on voudrait que notre belle animation boucle dans les deux sens. Or en javascript `-1 % 12`, retourne `-1` et non pas `11` comme on le voudrait.
-
-Si on jette une œil à [la documentation MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Remainder), on se rend compte que c'est le résultat qu'on obtient avec un opérateur `modulo` et non pas `reste`, malheureusement cet opérateur n'existe pas en javascript. Pour y remédier on peut écrire la petite fonction utilitaire proposée par la documentation :
+On se rend compte des limites de cet opérateur lorsqu'on s'imagine ajouter un bouton `-`. En effet, on voudrait que notre belle animation boucle dans les deux sens. Or en javascript `-1 % 12`, retourne `-1` et non pas `11` comme on le voudrait.\
+Si on jette une œil à [la documentation MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Remainder), on se rend compte que c'est le résultat qu'on obtient avec un opérateur `modulo` et non pas `reste`, malheureusement cet opérateur n'existe pas en javascript.
 
 <Aside>
 Dans certains autres langages, comme Python ou Ruby, l'opérateur % se comporte comme un opérateur modulo, qui garantit toujours un résultat positif, même avec des nombres négatifs. Cette différence peut entraîner des comportements inattendus lorsque vous portez du code d'un langage à un autre ou lorsque vous développez des algorithmes où le signe du résultat est important.
 </Aside>
 
-```js 
-const SPRITES = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚']
-let current = 0
+Pour y remédier on peut exploiter la petite formule fournie par la MDN:
 
+> Pour obtenir une opération équivalente au modulo en JavaScript, on pourra utiliser `((a % n ) + n ) % n`.
+
+```js
 function modulo(value, mod){
     return ((value % mod ) + mod ) % mod
 }
-
-function update(newValue){
-    current = modulo(newValue, SPRITES.length)
-    showSprite(SPRITES[current])
-}
 ```
+
+Et on obtient enfin une horloge qui tourne dans les deux sens!
 
 <Anim lessBtn client:only/>
