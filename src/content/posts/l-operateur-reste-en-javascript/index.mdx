@@ -73,7 +73,7 @@ Le code pourrait ressembler à quelque chose comme ceci :
 const SPRITES = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚']
 let current = 0
 
-function next(){
+function update(){
     current = (current + 1) % SPRITES.length
     showSprite(SPRITES[current])
 }
@@ -99,8 +99,8 @@ function modulo(value, mod){
     return ((value % mod ) + mod ) % mod
 }
 
-function next(value){
-    current = modulo(current + value, SPRITES.length)
+function update(newValue){
+    current = modulo(newValue, SPRITES.length)
     showSprite(SPRITES[current])
 }
 ```

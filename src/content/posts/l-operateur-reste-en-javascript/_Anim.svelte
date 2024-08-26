@@ -1,61 +1,98 @@
 <script lang="ts">
-    export let lessBtn = false
-    const sprites = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚']
-    let current = 0
-    const incr = (val:number)=> current = modulo(current + val, sprites.length) 
-    const modulo = (a:number, n:number)=>((a % n ) + n ) % n
+  const SPRITES = [
+    "🕛",
+    "🕐",
+    "🕑",
+    "🕒",
+    "🕓",
+    "🕔",
+    "🕕",
+    "🕖",
+    "🕗",
+    "🕘",
+    "🕙",
+    "🕚",
+  ];
+  let current = 0;
+
+  function modulo(value:number, mod:number) {
+    return ((value % mod) + mod) % mod;
+  }
+
+  function update(incrementation:number) {
+    current = modulo(current + incrementation, SPRITES.length);
+  }
+  export let lessBtn = false;
 </script>
 
 <figure class="container">
-    <div class="anim">
-        {#if lessBtn}
-            <button on:click={() => incr(-1)}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="1em" height="1em">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                  </svg>
-                  
-            </button>
-        {/if}
-        <span class="display">{sprites[current]}</span>
-        <button on:click={() => incr(1)}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="1em" height="1em">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              
-        </button>
-    </div>
+  <div class="anim">
+    {#if lessBtn}
+      <button on:click={() => update(-1)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          width="1em"
+          height="1em"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+        </svg>
+      </button>
+    {/if}
+    <span class="display">{SPRITES[current]}</span>
+    <button on:click={() => update(1)}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        width="1em"
+        height="1em"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 4.5v15m7.5-7.5h-15"
+        />
+      </svg>
+    </button>
+  </div>
 </figure>
 
 <style>
-    .anim {
-        --main-width: var(--popout-width);
-        text-align: center;
-        display: grid;
-        justify-content: center;
-        grid-auto-flow: column;
-        gap: var(--space-m);
-        align-items: center;
-        margin-block: var(--space-xl);
-        border: 1px solid var(--gray-6);
-    }
+  .anim {
+    --main-width: var(--popout-width);
+    text-align: center;
+    display: grid;
+    justify-content: center;
+    grid-auto-flow: column;
+    gap: var(--space-m);
+    align-items: center;
+    margin-block: var(--space-xl);
+    border: 1px solid var(--gray-6);
+  }
 
-    button{
-        border: 1px solid var(--gray-6);
-        background: var(--gray-2);
-        height: auto;
-        aspect-ratio: 1;
-        font-size: var(--step-1);
-        color:var(--gray-11);
-        transition: all .2s;
-    }
+  button {
+    border: 1px solid var(--gray-6);
+    background: var(--gray-2);
+    height: auto;
+    aspect-ratio: 1;
+    font-size: var(--step-1);
+    color: var(--gray-11);
+    transition: all 0.2s;
+  }
 
-    button:where(:hover,:focus-visible){
-        background-color: var(--gray-1);
-        border-color: var(--gray-8);
-        color: var(--gray-12);
-    }
+  button:where(:hover, :focus-visible) {
+    background-color: var(--gray-1);
+    border-color: var(--gray-8);
+    color: var(--gray-12);
+  }
 
-    .display{
-        font-size: var(--step-5)
-    }
+  .display {
+    font-size: var(--step-5);
+  }
 </style>
