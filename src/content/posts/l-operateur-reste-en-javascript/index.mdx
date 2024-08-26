@@ -4,15 +4,98 @@ date: 2024-08-16
 description: Quelques notes sur l'opérateur % et ses différences avec le modulo
 ---
 
-Contrairement à ce qu'on peut parfois lire, l'opérateur `%`, en javascript, est l'opérateur **reste** et non l'opérateur **modulo**.
+import Anim from "./_Anim.svelte"
 
-Lorsque les deux nombres sont positifs aucune différence. En revanche si un des deux nombre est négatif ces deux opérations n'ont rien à voir.
+J'ai eu envie d'écrire ce petit article après la lecture de celui de  [Josh Comeau](https://www.joshwcomeau.com/javascript/modulo-operator/), sur le même sujet. D'abord parcequ'il est excellent, mais aussi par envie d'ajouter quelques informations et précisions.
 
-Le reste `r` est calculé comme `n - d * q`, où `q` est l'entier qui rend `r` aussi proche de zéro que possible, tout en ayant le même signe que `n` (le dividende).
+## Qu'est-ce qu'un opérateur ?
 
-En revanche, le modulo `k` est calculé comme `n - d * q`, mais `q` est choisi pour que `k` soit aussi proche de zéro que possible, tout en ayant le même signe que `d` (le diviseur).
+En programmation un opérateur consiste en un symbole ou une suite de symbole, qui indique au compilateur ou interpréteur qu'il doit effectuer une opération. Chaque langage a ses propres opérateurs et même s'ils ons souvent une syntaxte symilaires, il existe aussi des différences.
 
-Pour obtenir un modulo en JavaScript, au lieu de `n % d`, on peut utiliser :
+Par exemple, dans le cas de javascript :
+
+- l'opérateur `===` inidique à l'interpréteur qu'il doit comparer la valeur de gauche est celle de droite
+- l'opérateur `+` indique à l'interpréteur qu'il doit retourner la somme des deux valeurs.
+-  l'opérateur `??` indique à l'interpréteur qu'il doit retourner la valeur de gauche si elle est différente de `null` et de `undefined` et la valeur de droite dans le cas contraire.
+
+## L'opérateur %
+
+Pour ce qui est de l'opérateur `%`, il retournera le reste de la division de la valeur de gauche par la valeur de droite.
+
+Par exemple:
+
+- `13 % 3` retournera `1`car `13 = 3 x 4 + 1`
+- `4 % 1` retournera `0`car `4 = 4 x 1 + 0`
+- `-5 % 2` retournera `-1`car `-5 = -2 x 2 + -1`
+
+## Utilisations courrantes
+
+### Savoir si un nombre est pair
+
+Pour savoir si un nombre est pair notre opérateur peut se montrer bien utile:
+
 ```js
-const modulo = (n, d) => ((n % d) + d) % d
+const isEven = (n) => n % 2 === 0
 ```
+
+### Réussir ses entretiens d'embauche 😅
+
+La légende veut que dans les entretiens techniques, on pose souvent le problème suivant :
+
+Écrivez une fonction qui, pour chaque nombre entier passé en entrée, retourne :
+
+- "Fizz" si le nombre est divisible par 3.
+- "Buzz" si le nombre est divisible par 5.
+- "FizzBuzz" si le nombre est divisible par 3 et par 5.
+- Le nombre sous forme de chaîne de caractères, dans les autres cas.
+
+```js
+const fizzBuzz = (n) => {
+  let result = ""
+  if (n % 3 === 0) result += "Fizz"
+  if (n % 5 === 0) result += "Buzz"
+  return result || n.toString()
+}
+```
+
+## Boucler sur un tableau
+
+Mettons qu'on veuille jouer une animation, à l'aide de javascript. Cette animation sera composée des emojis suivants: 🕛🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛
+
+Un bouton `+`, nous permettra de passer à la sprite suivante, et lorsqu'on passera la dernière sprite on reviendra à la première.
+
+Le code pourrait ressembler à quelque chose comme ceci :
+
+```js
+const SPRITES = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚']
+let current = 0
+
+function next(){
+    current = (current + 1) % SPRITES.length
+    showSprite(SPRITES[current])
+}
+```
+
+<Anim client:idle/>
+
+## Le piège de l'opérateur %
+
+On se rend compte des limites de notre cher opérateur lorsqu'on s'imagine ajouter un bouton `-`. En effet, on voudrait que notre belle animation boucle dans les deux sens. Or en javascript `-1 % 12`, retourne `-1` et non pas `11` comme on le voudrait.
+
+Si on jette une oeil à [la documentation MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Remainder), on se rend compte que c'est le résultat qu'on obtiendrait avec un opérateur `modulo` et non pas `reste`, malheureusement cet opérateur n'existe pas en javascript. Pour y remédier on peut écrire la petite fonction utilitaire proposée par la documentation :
+
+```js 
+const SPRITES = ['🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚']
+let current = 0
+
+function modulo(value, mod){
+    return ((val % mod ) + mod ) % mod
+}
+
+function next(value){
+    current = modulo(current + value, SPRITES.length)
+    showSprite(SPRITES[current])
+}
+```
+
+<Anim lessBtn client:idle/>
