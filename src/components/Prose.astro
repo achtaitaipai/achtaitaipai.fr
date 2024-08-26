@@ -47,19 +47,12 @@ const {Content} = Astro.props
   }
 
   .prose a {
-    color: var(--text-black);
-    text-decoration: none;
-    border-block-end: 2px solid;
     transition: color 0.2s;
   }
 
-  .prose a:hover,
-  .prose a:focus-visible {
-    color: var(--accent);
-  }
-
   .prose :not(pre) > code {
-    background-color: var(--gray-4);
+    background-color: var(--yellow-2);
+    border: 1px solid var(--yellow-6);
     border-radius: .2rem;
     padding: 0.2rem;
   }

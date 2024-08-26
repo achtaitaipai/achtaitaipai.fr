@@ -28,20 +28,31 @@ export const getStaticPaths = (async () => {
 ---
 
 <Base title={entry.data.title}>
-  <article>
-    <header class="container">
-      <h1>{title}</h1>
-      <time datetime={date.toDateString()}>{displayDate(date)}</time>
-    </header>
-    <Prose {Content}/>
-    <Pagination before={before ? {url:`/blog/${before.slug}`, title:before.data.title} : undefined} after={after ? {url:`/blog/${after.slug}`, title:after.data.title} : undefined}/>
-  </article>
+  <main>
+    <article>
+      <header class="container">
+        <h1>{title}</h1>
+        <time datetime={date.toDateString()}>{displayDate(date)}</time>
+      </header>
+      <Prose {Content} />
+    </article>
+    <Pagination
+      before={before
+        ? { url: `/blog/${before.slug}`, title: before.data.title }
+        : undefined}
+      after={after
+        ? { url: `/blog/${after.slug}`, title: after.data.title }
+        : undefined}
+    />
+  </main>
+  <footer class="container">
+    <div class="footerContent">
+      <a href={`https://github.com/achtaitaipai/achtaitaipai.fr/blob/main/src/content/posts/${slug}/index.mdx`}>Modifier sur github</a>
+    </div>
+  </footer>
 </Base>
 
 <style>
-  article {
-    padding-block: var(--space-2xl);
-  }
 
   header {
     margin-block-end: var(--space-2xl);
@@ -56,4 +67,15 @@ export const getStaticPaths = (async () => {
     color: var(--gray-11);
     margin-block-start: var(--space-xs);
   }
+
+  footer {
+    margin-block: var(--space-l) var(--space-m);
+    font-size: var(--step--1);
+  }
+
+  .footerContent{
+    padding-block: var(--space-s);
+    border-block-start: 1px solid var(--gray-6);
+  }
+
 </style>

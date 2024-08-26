@@ -7,7 +7,6 @@ body {
 
 main{
 	margin-block: var(--space-xl);
-	padding-inline: var(--space-s);
 }
 
 h1 {
@@ -33,3 +32,10 @@ button {
 	background: transparent;
 }
 
+a {
+	color: unset;
+}
+
+a:where(:hover,:focus-visible){
+	color: var(--blue-11);
+}
