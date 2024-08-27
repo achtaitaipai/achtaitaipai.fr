@@ -18,13 +18,12 @@ const {Content} = Astro.props
     --width: var(--breakout-width);
     --flow-space: var(--space-l);
     height: auto;
-    border: 1px solid var(--gray-6);
-    transform-origin: center bottom;
+    transform-origin: center;
     animation-name: fade-in;
     animation-timing-function: linear;
     animation-fill-mode: both;
     animation-timeline: view();
-    animation-range: entry 0% entry 100%;
+    animation-range: entry 0% entry 80%;
   }
 
   .prose img + * {
