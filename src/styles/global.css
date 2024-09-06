@@ -1,7 +1,7 @@
 body {
-	background-color: var(--gray-1);
+	background-color: var(--surface);
 	font-size: var(--step-0);
-	color: var(--gray-12);
+	color: var(--text);
 	font-family: var(--font-base);
 }
 
@@ -37,5 +37,5 @@ a {
 }
 
 a:where(:hover,:focus-visible){
-	color: var(--blue-11);
+	/* font-weight: bold; */
 }

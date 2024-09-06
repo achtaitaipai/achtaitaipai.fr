@@ -30,7 +30,7 @@ export const getStaticPaths = (async () => {
 <Base title={entry.data.title}>
   <main>
     <article>
-      <header class="container">
+      <header>
         <h1>{title}</h1>
         <time datetime={date.toDateString()}>{displayDate(date)}</time>
       </header>
@@ -45,26 +45,28 @@ export const getStaticPaths = (async () => {
         : undefined}
     />
   </main>
-  <footer class="container">
-    <div class="footerContent">
+  <footer>
       <a href={`https://github.com/achtaitaipai/achtaitaipai.fr/blob/main/src/content/posts/${slug}/index.mdx`}>Modifier sur github</a>
-    </div>
   </footer>
 </Base>
 
 <style>
-
+article{
+    max-inline-size: var(--main-width);
+    margin-inline: auto;
+  }
   header {
     margin-block-end: var(--space-2xl);
   }
 
   header h1 {
     font-size: var(--step-7);
+    max-inline-size: 15ch;
+
   }
 
   header time {
     display: block;
-    color: var(--gray-11);
     margin-block-start: var(--space-xs);
   }
 
@@ -73,14 +75,12 @@ export const getStaticPaths = (async () => {
     font-size: var(--step--1);
   }
 
-  .footerContent{
+  footer{
+    max-inline-size: var(--main-width);
+    margin-inline: auto;
     padding-block: var(--space-s);
-    border-block-start: 1px solid var(--gray-6);
+    border-block-start: 1px solid currentColor;
     display: flex;
-  }
-
-  .footerContent a{
-    margin-inline-start: auto;
   }
 
 </style>

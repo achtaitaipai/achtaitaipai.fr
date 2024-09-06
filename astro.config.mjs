@@ -13,10 +13,9 @@ export default defineConfig({
     remarkPlugins: [remarkUnwrapImages]
   },
   integrations: [expressiveCode({
-    themeCssSelector: theme => theme.name.includes("light") ? '' : '.dark',
+    themes:["vesper"],
     styleOverrides: {
       borderRadius: 0,
-      codeBackground:"var(--gray-1)",
       frames: {
         shadowColor: "transparent"
       }

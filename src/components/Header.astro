@@ -1,61 +1,102 @@
 ---
-import Hamburger from "./Hamburger/Hamburger.astro";
-import ThemeSwitch from "./ThemeSwitch.astro";
+import { getCollection } from "astro:content";
+
+const pages = await getCollection("pages");
 ---
+
 <c-header>
-    <header>
-        <a href="/">Achtaitaipai</a>
-        <Hamburger/>
-        <!-- <ThemeSwitch/> -->
-    </header>
+  <header>
+    <div class="wrapper">
+      <a href="/" class="title">Achtaitaipai</a>
+      <nav>
+        <ul role="list">
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/projets">Projets</a></li>
+          {pages.map(el=>(
+            <li><a href={`/${el.slug}`}>{el.data.title}</a></li>
+          ))}
+          </ul>
+      </nav>
+    </div>
+  </header>
 </c-header>
 
 <script>
-    import {clamp} from "src/libs/number.ts"
-    customElements.define("c-header",class Header extends HTMLElement{
-        #wrapper: HTMLElement
-        #oldScrollY: number
-        #scrollY: number
-        #translateY = 0
-        constructor(){
-            super()
-            this.#wrapper = this.querySelector("header")!
-            this.#oldScrollY = window.scrollY
-            this.#scrollY = window.scrollY
-        }
-        connectedCallback(){
-            document.addEventListener("scroll",this.#handleScroll)
-        }
-        #handleScroll = () => {
-            const maxScroll = document.body.scrollHeight - document.documentElement.clientHeight
-            this.#scrollY =clamp(0,window.scrollY,maxScroll)
-            const headerHeight = this.#wrapper.clientHeight
-            const diff = this.#scrollY - this.#oldScrollY
-            this.#translateY = clamp(0,this.#translateY + diff, headerHeight)
-            this.#wrapper.style.setProperty("--_translate-y",`-${this.#translateY.toString()}px`)
-            this.#oldScrollY = this.#scrollY
-        }
-    })
+  import { clamp } from "src/libs/number.ts";
+  customElements.define(
+    "c-header",
+    class Header extends HTMLElement {
+      #wrapper: HTMLElement;
+      #oldScrollY: number;
+      #scrollY: number;
+      #translateY = 0;
+      constructor() {
+        super();
+        this.#wrapper = this.querySelector("header")!;
+        this.#oldScrollY = window.scrollY;
+        this.#scrollY = window.scrollY;
+      }
+      connectedCallback() {
+        document.addEventListener("scroll", this.#handleScroll);
+      }
+      #handleScroll = () => {
+        const maxScroll =
+          document.body.scrollHeight - document.documentElement.clientHeight;
+        this.#scrollY = clamp(0, window.scrollY, maxScroll);
+        const headerHeight = this.#wrapper.clientHeight;
+        const diff = this.#scrollY - this.#oldScrollY;
+        this.#translateY = clamp(0, this.#translateY + diff, headerHeight);
+        this.#wrapper.style.setProperty(
+          "--_translate-y",
+          `-${this.#translateY.toString()}px`
+        );
+        this.#oldScrollY = this.#scrollY;
+      };
+    }
+  );
 </script>
 
 <style>
-    header{
-        position: sticky;
-        top: 0;
-        margin-inline:auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        z-index: 2;
-        padding-inline: var(--space-s);
-        height: var(--space-2xl);
-        background-color: var(--gray-1);
-        transform: translateY(var(--_translate-y));
-    }
-    a {
-        color: currentColor;
-        font-size: var(--step-2);
-        text-decoration: none;
-        font-weight: 600;
-    }
+  header {
+    position: sticky;
+    top: 0;
+    margin-inline: auto;
+    display: flex;
+    z-index: 2;
+    background-color: var(--surface);
+    padding-block-start: var(--space-xs);
+    transform: translateY(var(--_translate-y));
+  }
+  .wrapper{
+    inline-size: var(--main-width);
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  nav ul{
+    display: flex;
+    gap: var(--gutter);
+  }
+  a {
+    color: currentColor;
+    text-decoration: none;
+  }
+
+  nav a {
+    padding-block:var(--space-3xs);
+    padding-inline:var(--space-xs);
+    transition: color .3s, background-color .3s;
+  }
+
+  nav a:where(:hover,:focus-visible) {
+    background-color: var(--text);
+    color: var(--surface);
+  }
+
+  .title {
+    font-size: var(--step-3);
+    font-weight: 600;
+  }
 </style>

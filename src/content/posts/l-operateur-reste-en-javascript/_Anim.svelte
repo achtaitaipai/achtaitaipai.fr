@@ -65,15 +65,16 @@
 
 <style>
   figure {
-    max-width: var(--popout-width);
+    grid-column: popout;
     margin-inline: auto;
+    inline-size: 100%;
     margin-block: var(--space-xl);
     padding-block: var(--space-m);
-    border: 1px solid var(--gray-6);
+    border: 2px solid currentColor;
+    box-shadow: 5px 3px var(--text);
     text-align: center;
   }
   .anim {
-    --main-width: var(--popout-width);
     display: inline-grid;
     justify-content: center;
     grid-template-columns: 1fr auto 1fr;
@@ -83,20 +84,19 @@
   }
 
   button {
-    border: 1px solid var(--gray-6);
-    background: var(--gray-2);
+    border: 1px solid currentColor;
+    background: var(--text);
+    color: var(--surface);
     height: auto;
     aspect-ratio: 1;
     font-size: var(--step-1);
-    color: var(--gray-11);
     transition: all 0.2s;
     border-radius: 99999em;
   }
 
-  button:where(:hover, :focus-visible) {
-    background-color: var(--gray-1);
-    border-color: var(--gray-8);
-    color: var(--gray-12);
+  button:where(:hover,:focus-visible){
+    color:var(--text);
+    background-color: transparent;
   }
 
   button:last-child {

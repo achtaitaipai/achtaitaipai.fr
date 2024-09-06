@@ -69,22 +69,24 @@ const maskId = nanoid();
 
 <style>
   button {
-    padding: var(--space-m);
-    color: var(--gray-11);
+    color: var(--text-shade);
     display: inline-flex;
     align-items: center;
     text-decoration: none;
     background-color: transparent;
-    font-size: var(--step-1);
+    /* font-size: var(--step-1); */
+    padding: 0;
+    display: flex;
   }
 
   button:where(:hover, :focus-visible) {
-    color: var(--gray-12);
+    color: var(--text);
   }
 
   svg {
     transform: rotate(-130deg);
-    transition: transform 0.3s 0.3s;
+    scale: 1.5;
+    transition: transform 0.3s 0.3s, scale .3s .3s;
   }
 
   .mask {
@@ -99,7 +101,8 @@ const maskId = nanoid();
 
   :global(.dark) svg {
     transform: rotate(0);
-    transition-duration: 0s;
+    scale: 1;
+    transition: scale .3s;
   }
 
   :global(.dark) .mask {

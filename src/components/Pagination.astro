@@ -13,6 +13,7 @@ export type Props = {
 const { before, after } = Astro.props;
 ---
 
+<div class="wrapper">
 <nav>
   {
     before && (
@@ -33,13 +34,17 @@ const { before, after } = Astro.props;
     )
   }
 </nav>
+</div>
 
 <style>
-  nav {
+  .wrapper{
     max-inline-size: var(--main-width);
     margin-inline: auto;
+  }
+  nav {
     margin-block-start: var(--space-2xl);
     display: grid;
+    max-inline-size: 66ch;
     gap: var(--space-s);
     @media (width > 55rem) {
         grid-template-columns: 1fr 1fr;
@@ -51,23 +56,23 @@ const { before, after } = Astro.props;
     display: grid;
     align-items: center;
     column-gap: var(--space-s);
-    border: solid 1px var(--gray-6);
+    outline: solid 1px currentColor;
     padding-block: var(--space-xs);
     padding-inline: var(--space-s);
     text-decoration: none;
-    color: var(--gray-12);
+    color: var(--text);
   }
 
-  a:where(:hover,:focus-visible) {
-    border-color: var(--gray-8);
+  a:where(:hover,:focus-visible){
+    outline-width: 2px;
   }
 
   .prev:where(:hover,:focus-visible) > *{
-    transform: translateX(-.3rem);
+    transform: translateX(-.5rem);
   }
 
   .next:where(:hover,:focus-visible) > *{
-    transform: translateX(.3rem);
+    transform: translateX(.5rem);
   }
 
   .prev {
@@ -88,10 +93,8 @@ const { before, after } = Astro.props;
     font-size: var(--step-1);
     transition: transform .3s;
   }
-
   .label {
     grid-area: label;
-    color: var(--gray-11);
     transition: transform .3s .08s;
   }
   .title {

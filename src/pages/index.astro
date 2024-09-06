@@ -8,12 +8,17 @@ const entries = (await getCollection("posts")).sort((a,b)=>b.data.date.getTime()
 
 <Base title="Accueil">
 	<main>
+		<div class="hero">
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus quisquam quos fuga vero obcaecati beatae esse? Tenetur suscipit laborum iste magnam neque cupiditate delectus corrupti. Ipsa laudantium necessitatibus exercitationem explicabo?
+			</p>
+		</div>
 		<ul role="list">
 			{entries.map(el=>(
 				<li>
 					<a class="" href={`/blog/${el.slug}`}>
-						<h3>{el.data.title}</h3>
 						<time datetime="">{displayDate(el.data.date)}</time>
+						<h3 class="line-clamp">{el.data.title}</h3>
 						{el.data.description && 
 						<p>{el.data.description}</p>
 						}
@@ -26,43 +31,44 @@ const entries = (await getCollection("posts")).sort((a,b)=>b.data.date.getTime()
 
 <style>
 	main {
-		max-inline-size: var(--wide-width);
+		max-inline-size: var(--main-width);
 		margin-inline: auto;
 	}
 
+	.hero {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: var(--gutter);
+		margin-block: var(--space-xl);
+	}
+
+	.hero p{
+		grid-column: span 3;
+	}
+
+	li + li {
+		margin-block-start: var(--space-m);
+		padding-block-start: var(--space-m);
+		border-block-start: 1px solid currentColor;
+	}
+
 	a{
-		display: flex;
-		flex-direction: column;
-		align-items: baseline;
-		flex-wrap: wrap;
-		padding-block: var(--space-m);
-		color:currentColor;
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: var(--gutter);
+		grid-auto-flow: column;
 		text-decoration: none;
-		column-gap: var(--space-s);
+		align-items: baseline;
 	}
 
 	time {
-		color:var(--gray-11);
 	}
 	
 	h3{
-		order: -1;
+		grid-column: span 2;
 	}
 
 	p{
-		flex-basis: 100%;
-		margin-block-start: var(--space-3xs);
-	}
-
-	@media (width>60rem){
-		a {
-			flex-direction: row;
-		}
-		a::before{
-			content: "";
-			height: 1px;
-			background: var(--gray-6);
-			flex-grow: 1;
-		}
+		grid-column: span 2;
 	}
 </style>

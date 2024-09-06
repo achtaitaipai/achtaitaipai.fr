@@ -2,11 +2,6 @@
   margin-block-start: var(--flow-space, 1em);
 }
 
-.container > * {
-  max-inline-size: var(--width, var(--main-width));
-  margin-inline: auto;
-}
-
 .line-clamp {
   overflow: hidden;
   display: -webkit-box;

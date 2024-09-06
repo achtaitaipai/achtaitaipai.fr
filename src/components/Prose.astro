@@ -2,6 +2,7 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 import Aside from './Aside.astro'
 import Now from './Now.astro'
+import PenEmbed from './PenEmbed.astro'
 
 export type Props = {
   Content: AstroComponentFactory
@@ -9,13 +10,24 @@ export type Props = {
 
 const {Content} = Astro.props
 ---
-<section class="prose flow container mx-auto">
-  <Content components={{Aside, Now}}/>
+<section class="prose flow mx-auto">
+  <Content components={{Aside, Now, PenEmbed}}/>
 </section>
 
+<style>
+  .prose{
+    --popout: minmax(0, var(--space-s));
+    display: grid;
+    grid-template-columns: [fullbleed-start popout-start] var(--popout) [content-start] min(66ch, 100%) [content-end] var(--popout) [popout-end] 1fr [fullbleed-end];
+  }
+</style>
+
 <style is:global>
+
+  .prose > * {
+    grid-column: content;
+  }
   .prose img {
-    --width: var(--breakout-width);
     --flow-space: var(--space-l);
     height: auto;
     transform-origin: center;
@@ -31,7 +43,7 @@ const {Content} = Astro.props
   }
 
   .prose > :where(aside, img, .expressive-code) {
-    --width: var(--popout-width);
+    grid-column: popout;
     --flow-space: var(--space-l);
   }
 
@@ -50,15 +62,14 @@ const {Content} = Astro.props
   }
 
   .prose :not(pre) > code {
-    background-color: var(--yellow-2);
-    border: 1px solid var(--yellow-6);
-    border-radius: .2rem;
     padding: 0.2rem;
+    border: 1px solid currentColor;
+    font-family: var(--font-mono);
   }
 
   .prose hr {
     border: none;
-    border-block-start: 1px solid var(--gray-6);
+    border-block-start: 1px solid var(--stroke);
   }
 
   .prose blockquote {
@@ -67,7 +78,7 @@ const {Content} = Astro.props
     font-size: var(--step-1);
     font-style: italic;
     line-height: 1.4;
-    color: var(--gray-11);
+    /* color: var(--text-shade); */
   }
 
   .prose blockquote :first-child {
