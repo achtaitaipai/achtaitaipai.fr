@@ -47,12 +47,11 @@ const entries = (await getCollection("posts")).sort((a,b)=>b.data.date.getTime()
 	}
 
 	li + li {
-		margin-block-start: var(--space-m);
-		padding-block-start: var(--space-m);
 		border-block-start: 1px solid currentColor;
 	}
 
 	a{
+		padding-block: var(--space-l);
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
 		gap: var(--gutter);

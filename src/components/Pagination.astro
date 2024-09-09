@@ -14,30 +14,34 @@ const { before, after } = Astro.props;
 ---
 
 <div class="wrapper">
-<nav>
-  {
-    before && (
-      <a href={before.url} class="prev">
-        <span class="arrow">&larr;</span>
-        <span class="label">Précédent</span>
-        <span class="title line-clamp">{before.title}</span>
-      </a>
-    )
-  }
-  {
-    after && (
-      <a href={after.url} class="next">
-        <span class="label">Suivant</span>
-        <span class="title line-clamp">{after.title}</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-    )
-  }
-</nav>
+  <nav>
+    {
+      before && (
+        <a href={before.url} class="prev">
+          <div class="link-wrapper">
+            <span class="arrow">&larr;</span>
+            <span class="label">Précédent</span>
+            <span class="title line-clamp">{before.title}</span>
+          </div>
+        </a>
+      )
+    }
+    {
+      after && (
+        <a href={after.url} class="next">
+          <div class="link-wrapper">
+            <span class="label">Suivant</span>
+            <span class="title line-clamp">{after.title}</span>
+            <span class="arrow">&rarr;</span>
+          </div>
+        </a>
+      )
+    }
+  </nav>
 </div>
 
 <style>
-  .wrapper{
+  .wrapper {
     max-inline-size: var(--main-width);
     margin-inline: auto;
   }
@@ -47,59 +51,59 @@ const { before, after } = Astro.props;
     max-inline-size: 66ch;
     gap: var(--space-s);
     @media (width > 55rem) {
-        grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
     }
   }
 
   a {
     flex-grow: 1;
-    display: grid;
-    align-items: center;
-    column-gap: var(--space-s);
-    outline: solid 1px currentColor;
-    padding-block: var(--space-xs);
-    padding-inline: var(--space-s);
     text-decoration: none;
     color: var(--text);
-  }
-
-  a:where(:hover,:focus-visible){
-    outline-width: 2px;
-  }
-
-  .prev:where(:hover,:focus-visible) > *{
-    transform: translateX(-.5rem);
-  }
-
-  .next:where(:hover,:focus-visible) > *{
-    transform: translateX(.5rem);
-  }
-
-  .prev {
-    grid-template:
-      "arrow label"
-      "arrow title" / auto 1fr;
+    border: 1px solid currentColor;
   }
 
   .next {
     grid-column: -2;
-    grid-template:
-      "label arrow"
-      "title arrow"  / 1fr auto;
-    justify-items: end;
+  }
+
+  .link-wrapper {
+    display: grid;
+    align-items: center;
+    column-gap: var(--space-s);
+    padding-block: var(--space-xs);
+    padding-inline: var(--space-s);
+    background-color: var(--surface);
+    outline: 1px solid currentColor;
+    transition: transform .3s;
+    .prev & {
+      grid-template:
+        "arrow label"
+        "arrow title" / auto 1fr;
+    }
+
+    .next & {
+      grid-template:
+        "label arrow"
+        "title arrow" / 1fr auto;
+      justify-items: end;
+    }
+  }
+
+  a:where(:hover, :focus-visible) .link-wrapper{
+    transform: translate(-4px, -4px);
   }
   .arrow {
     grid-area: arrow;
     font-size: var(--step-1);
-    transition: transform .3s;
+    transition: transform 0.3s;
   }
   .label {
     grid-area: label;
-    transition: transform .3s .08s;
+    transition: transform 0.3s 0.08s;
   }
   .title {
     grid-area: title;
     font-size: var(--step-1);
-    transition: transform .3s .08s;
+    transition: transform 0.3s 0.08s;
   }
 </style>

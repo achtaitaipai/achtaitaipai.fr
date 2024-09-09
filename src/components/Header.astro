@@ -10,10 +10,10 @@ const pages = await getCollection("pages");
       <a href="/" class="title">Achtaitaipai</a>
       <nav>
         <ul role="list">
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/projets">Projets</a></li>
+            <li><a href="/blog"><span>Blog</span></a></li>
+            <li><a href="/projets"><span>Projets</span></a></li>
           {pages.map(el=>(
-            <li><a href={`/${el.slug}`}>{el.data.title}</a></li>
+            <li><a href={`/${el.slug}`}><span>{el.data.title}</span></a></li>
           ))}
           </ul>
       </nav>
@@ -85,14 +85,21 @@ const pages = await getCollection("pages");
   }
 
   nav a {
-    padding-block:var(--space-3xs);
-    padding-inline:var(--space-xs);
-    transition: color .3s, background-color .3s;
+    border: 1px solid currentColor;
+    display: flex;
   }
 
-  nav a:where(:hover,:focus-visible) {
-    background-color: var(--text);
-    color: var(--surface);
+  nav a span{
+    outline: 1px solid currentColor;
+    display: block;
+    padding-inline:var(--space-xs);
+    padding-block: var(--space-4xs);
+    transition: transform .3s;
+    background-color: var(--surface);
+  }
+
+  nav a:where(:hover,:focus-visible) span{
+    transform: translate(-4px, -4px);
   }
 
   .title {

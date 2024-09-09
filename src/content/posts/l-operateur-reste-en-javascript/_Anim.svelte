@@ -70,7 +70,7 @@
     inline-size: 100%;
     margin-block: var(--space-xl);
     padding-block: var(--space-m);
-    border: 2px solid currentColor;
+    border: 1px solid currentColor;
     box-shadow: 5px 3px var(--text);
     text-align: center;
   }
