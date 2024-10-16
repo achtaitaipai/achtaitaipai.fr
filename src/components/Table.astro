@@ -2,18 +2,22 @@
 import { getCollection } from "astro:content";
 
 const stuff = await getCollection("stuff");
-const tableData = stuff.map((el) => ({ ...el.data, slug: el.slug }));
+const tableData = stuff
+  .sort(() => Math.random() - 0.5)
+  .map((el) => ({ ...el.data, slug: el.slug }));
 ---
 
 <table
   x-data={`{rows:${JSON.stringify(tableData)}, sort(key){this.rows.sort((a,b)=> a[key].toString().localeCompare(b[key].toString(),'fr'))}}`}
+  x-show="true"
+  style="display:none"
 >
   <thead>
     <tr>
       <th><button x-on:click="sort('title')">Titre</button></th>
-      <th>À propos</th>
       <th><button x-on:click="sort('year')">Année</button></th>
       <th><button x-on:click="sort('type')">Type</button></th>
+      <th>À propos</th>
     </tr>
   </thead>
   <tbody>
@@ -22,20 +26,33 @@ const tableData = stuff.map((el) => ({ ...el.data, slug: el.slug }));
         <td>
           <a x-bind:href="`/mes-trucs/${item.slug}`" x-text="item.title"></a>
         </td>
-        <td x-text="item.description"></td>
         <td x-text="item.year"></td>
         <td x-text="item.type"></td>
+        <td x-text="item.description"></td>
       </tr>
     </template>
+  </tbody>
+</table>
+
+<table x-data="" x-show="false">
+  <thead x-cloack>
+    <tr>
+      <th>Titre</th>
+      <th>Année</th>
+      <th>Type</th>
+      <th>À propos</th>
+    </tr>
+  </thead>
+  <tbody>
     {
       stuff.map((el) => (
-        <tr x-cloack class="static">
+        <tr>
           <td>
             <a href={`/mes-trucs/${el.slug}`}>{el.data.title}</a>{" "}
           </td>
-          <td>{el.data.description}</td>
           <td>{el.data.year}</td>
           <td>{el.data.type}</td>
+          <td>{el.data.description}</td>
         </tr>
       ))
     }
