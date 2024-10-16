@@ -1,73 +1,70 @@
 ---
-import { getCollection } from "astro:content";
-import Base from "src/layouts/Base.astro";
-import { displayDate } from "src/libs/date.ts";
+import { getCollection } from 'astro:content'
+import Base from 'src/layouts/base.astro'
+import 'src/style/index.css'
+import { getWeatherData } from 'src/lib/meteo.ts'
 
-const entries = (await getCollection("posts")).sort((a,b)=>b.data.date.getTime() - a.data.date.getTime())
+const stuff = await getCollection('stuff')
+const now = new Intl.DateTimeFormat('fr-FR', {
+	dateStyle: 'long',
+	timeZone: 'Europe/Paris',
+}).format(Date.now())
+const weatherData = await getWeatherData()
 ---
 
-<Base title="Accueil">
-	<main>
-		<div class="hero">
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus quisquam quos fuga vero obcaecati beatae esse? Tenetur suscipit laborum iste magnam neque cupiditate delectus corrupti. Ipsa laudantium necessitatibus exercitationem explicabo?
-			</p>
-		</div>
-		<ul role="list">
-			{entries.map(el=>(
-				<li>
-					<a class="" href={`/blog/${el.slug}`}>
-						<time datetime="">{displayDate(el.data.date)}</time>
-						<h3 class="line-clamp">{el.data.title}</h3>
-						{el.data.description && 
-						<p>{el.data.description}</p>
-						}
-					</a>
-				</li>
-			))}
-		</ul>
-	</main>
+<Base title="Bonjour">
+	<section>
+		<h1>Bonjour</h1>
+		<p>
+			Je m'appelle Charles. Je bricole des petits jeux, des outils, des sites
+			internet et d'autres trucs. Dans mes fabrications, j'essaie d'être
+			économique, produire beaucoup avec peu fait partie de mes objectifs.
+			J'aime internet, ça permet de partager simplement toutes sortes de trucs.
+			J'aimerai plus de sites indépendants, que les gens reprennent le contrôle
+			sur la façon dont ils montrent ce qu'ils font.
+		</p>
+
+		<p>
+			Ce site a été déployé pour la dernière fois le {now}, il faisait {
+				weatherData.temperature
+			}°c {weatherData.meteoStatus && ` et ${weatherData.meteoStatus}.`}
+		</p>
+	</section>
+	<section>
+		<h2>Maintenant</h2>
+		<p>
+			Actuellement, je gagne ma vie en développant des sites internets. Sur mon
+			temps libre, je travaille principalement sur Odyc. Une librairie et un
+			site internet pour permettre à qui le veut de coder des petits jeux vidéo.
+			Lorsque l'occasion se présente, j'anime des ateliers sur la création
+			numérique.
+		</p>
+	</section>
+	<section>
+		<h2>Mes trucs</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Titre</th>
+					<th>À propos</th>
+					<th>Année</th>
+					<th>Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				{
+					stuff.map((el) => (
+						<tr>
+							<td>
+								<a href={`/mes-trucs/${el.slug}`}>{el.data.title}</a>
+							</td>
+							<td>{el.data.description}</td>
+							<td>{el.data.year}</td>
+							<td>{el.data.type}</td>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
+	</section>
 </Base>
-
-<style>
-	main {
-		max-inline-size: var(--main-width);
-		margin-inline: auto;
-	}
-
-	.hero {
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-		gap: var(--gutter);
-		margin-block: var(--space-xl);
-	}
-
-	.hero p{
-		grid-column: span 3;
-	}
-
-	li + li {
-		border-block-start: 1px solid currentColor;
-	}
-
-	a{
-		padding-block: var(--space-l);
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-		gap: var(--gutter);
-		grid-auto-flow: column;
-		text-decoration: none;
-		align-items: baseline;
-	}
-
-	time {
-	}
-	
-	h3{
-		grid-column: span 2;
-	}
-
-	p{
-		grid-column: span 2;
-	}
-</style>

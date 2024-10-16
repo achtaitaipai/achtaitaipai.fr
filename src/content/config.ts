@@ -1,26 +1,13 @@
-import { defineCollection, z,reference } from "astro:content"
+import { defineCollection, z } from 'astro:content'
 
 export const collections = {
-	posts: defineCollection({
-		type: "content",
+	stuff: defineCollection({
+		type: 'content',
 		schema: z.object({
 			title: z.string(),
-			date: z.date(),
-			description: z.string().optional(),
-			categories: z.array(reference("categories")).optional()
+			year: z.number(),
+			type: z.string(),
+			description: z.string(),
 		}),
 	}),
-	pages: defineCollection({
-		type: "content",
-		schema: z.object({
-			title: z.string()
-		})
-	}),
-
-	categories: defineCollection({
-		type: "content",
-		schema: z.object({
-			title: z.string()
-		})
-	})
 }

@@ -1,24 +1,21 @@
 ---
-import Header from "src/components/Header.astro";
-import "src/styles/index.css";
+import 'src/style/index.css'
 export type Props = {
-  title: string;
-};
-const { title } = Astro.props;
+	title?: string
+}
+const { title } = Astro.props
 ---
 
-<!doctype html>
-<html lang="fr" class="">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <script is:inline src="/scripts/preloadTheme.js"></script>
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
-  </head>
-  <body>
-    <Header />
-    <slot />
-  </body>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title && `${title} - `} Achtaitaipai</title></head
+	>
+
+	<body>
+		<slot />
+	</body>
 </html>
