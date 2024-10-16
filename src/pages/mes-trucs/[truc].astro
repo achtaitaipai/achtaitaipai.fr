@@ -1,27 +1,27 @@
 ---
-import type { GetStaticPaths } from 'astro'
-import { getEntry } from 'astro:content'
-import { getCollection } from 'astro:content'
-import Base from 'src/layouts/base.astro'
+import type { GetStaticPaths } from "astro";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Base from "src/layouts/Base.astro";
 
 export const getStaticPaths = (async () => {
-	const stuff = await getCollection('stuff')
-	return stuff.map((el) => ({
-		params: { truc: el.slug },
-	}))
-}) satisfies GetStaticPaths
+  const stuff = await getCollection("stuff");
+  return stuff.map((el) => ({
+    params: { truc: el.slug },
+  }));
+}) satisfies GetStaticPaths;
 
-const { truc: slug } = Astro.params
-const entry = await getEntry('stuff', slug)
-const { Content } = await entry.render()
+const { truc: slug } = Astro.params;
+const entry = await getEntry("stuff", slug);
+const { Content } = await entry.render();
 ---
 
 <Base title={entry.data.title}>
-	<header>
-		<a href="/">&larr; Accueil</a>
-	</header>
-	<main>
-		<h1>{entry.data.title}</h1>
-		<Content />
-	</main>
+  <header>
+    <a href="/">&larr; Accueil</a>
+  </header>
+  <main>
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </main>
 </Base>

@@ -1,70 +1,70 @@
 ---
-import { getCollection } from 'astro:content'
-import Base from 'src/layouts/base.astro'
-import 'src/style/index.css'
-import { getWeatherData } from 'src/lib/meteo.ts'
+import { getCollection } from "astro:content";
+import Base from "src/layouts/Base.astro";
+import "src/style/index.css";
+import { getWeatherData } from "src/lib/meteo.ts";
 
-const stuff = await getCollection('stuff')
-const now = new Intl.DateTimeFormat('fr-FR', {
-	dateStyle: 'long',
-	timeZone: 'Europe/Paris',
-}).format(Date.now())
-const weatherData = await getWeatherData()
+const stuff = await getCollection("stuff");
+const now = new Intl.DateTimeFormat("fr-FR", {
+  dateStyle: "long",
+  timeZone: "Europe/Paris",
+}).format(Date.now());
+const weatherData = await getWeatherData();
 ---
 
 <Base title="Bonjour">
-	<section>
-		<h1>Bonjour</h1>
-		<p>
-			Je m'appelle Charles. Je bricole des petits jeux, des outils, des sites
-			internet et d'autres trucs. Dans mes fabrications, j'essaie d'être
-			économique, produire beaucoup avec peu fait partie de mes objectifs.
-			J'aime internet, ça permet de partager simplement toutes sortes de trucs.
-			J'aimerai plus de sites indépendants, que les gens reprennent le contrôle
-			sur la façon dont ils montrent ce qu'ils font.
-		</p>
+  <section>
+    <h1>Bonjour</h1>
+    <p>
+      Je m'appelle Charles. Je bricole des petits jeux, des outils, des sites
+      internet et d'autres trucs. Dans mes fabrications, j'essaie d'être
+      économique, produire beaucoup avec peu fait partie de mes objectifs.
+      J'aime internet, ça permet de partager simplement toutes sortes de trucs.
+      J'aimerai plus de sites indépendants, que les gens reprennent le contrôle
+      sur la façon dont ils montrent ce qu'ils font.
+    </p>
 
-		<p>
-			Ce site a été déployé pour la dernière fois le {now}, il faisait {
-				weatherData.temperature
-			}°c {weatherData.meteoStatus && ` et ${weatherData.meteoStatus}.`}
-		</p>
-	</section>
-	<section>
-		<h2>Maintenant</h2>
-		<p>
-			Actuellement, je gagne ma vie en développant des sites internets. Sur mon
-			temps libre, je travaille principalement sur Odyc. Une librairie et un
-			site internet pour permettre à qui le veut de coder des petits jeux vidéo.
-			Lorsque l'occasion se présente, j'anime des ateliers sur la création
-			numérique.
-		</p>
-	</section>
-	<section>
-		<h2>Mes trucs</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Titre</th>
-					<th>À propos</th>
-					<th>Année</th>
-					<th>Type</th>
-				</tr>
-			</thead>
-			<tbody>
-				{
-					stuff.map((el) => (
-						<tr>
-							<td>
-								<a href={`/mes-trucs/${el.slug}`}>{el.data.title}</a>
-							</td>
-							<td>{el.data.description}</td>
-							<td>{el.data.year}</td>
-							<td>{el.data.type}</td>
-						</tr>
-					))
-				}
-			</tbody>
-		</table>
-	</section>
+    <p>
+      Ce site a été déployé pour la dernière fois le {now}, il faisait {
+        weatherData.temperature
+      }°c {weatherData.meteoStatus && ` et ${weatherData.meteoStatus}.`}
+    </p>
+  </section>
+  <section>
+    <h2>Maintenant</h2>
+    <p>
+      Actuellement, je gagne ma vie en développant des sites internets. Sur mon
+      temps libre, je travaille principalement sur Odyc. Une librairie et un
+      site internet pour permettre à qui le veut de coder des petits jeux vidéo.
+      Lorsque l'occasion se présente, j'anime des ateliers sur la création
+      numérique.
+    </p>
+  </section>
+  <section>
+    <h2>Mes trucs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>À propos</th>
+          <th>Année</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          stuff.map((el) => (
+            <tr>
+              <td>
+                <a href={`/mes-trucs/${el.slug}`}>{el.data.title}</a>
+              </td>
+              <td>{el.data.description}</td>
+              <td>{el.data.year}</td>
+              <td>{el.data.type}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
 </Base>
