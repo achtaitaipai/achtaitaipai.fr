@@ -1,12 +1,12 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "src/layouts/Base.astro";
 import "src/style/index.css";
 import { getWeatherData } from "src/lib/meteo.ts";
+import Table from "src/components/Table.astro";
 
-const stuff = await getCollection("stuff");
 const now = new Intl.DateTimeFormat("fr-FR", {
   dateStyle: "long",
+  timeStyle: "short",
   timeZone: "Europe/Paris",
 }).format(Date.now());
 const weatherData = await getWeatherData();
@@ -42,29 +42,6 @@ const weatherData = await getWeatherData();
   </section>
   <section>
     <h2>Mes trucs</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Titre</th>
-          <th>À propos</th>
-          <th>Année</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          stuff.map((el) => (
-            <tr>
-              <td>
-                <a href={`/mes-trucs/${el.slug}`}>{el.data.title}</a>
-              </td>
-              <td>{el.data.description}</td>
-              <td>{el.data.year}</td>
-              <td>{el.data.type}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
+    <Table />
   </section>
 </Base>

@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+
+const stuff = await getCollection("stuff");
+const tableData = stuff.map((el) => ({ ...el.data, slug: el.slug }));
+---
+
+<table
+  x-data={`{rows:${JSON.stringify(tableData)}, sort(key){this.rows.sort((a,b)=> a[key].toString().localeCompare(b[key].toString(),'fr'))}}`}
+>
+  <thead>
+    <tr>
+      <th><button x-on:click="sort('title')">Titre</button></th>
+      <th>À propos</th>
+      <th><button x-on:click="sort('year')">Année</button></th>
+      <th><button x-on:click="sort('type')">Type</button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <template x-for="item in rows" x-key="item.slug">
+      <tr>
+        <td>
+          <a x-bind:href="`/mes-trucs/${item.slug}`" x-text="item.title"></a>
+        </td>
+        <td x-text="item.description"></td>
+        <td x-text="item.year"></td>
+        <td x-text="item.type"></td>
+      </tr>
+    </template>
+    {
+      stuff.map((el) => (
+        <tr x-cloack class="static">
+          <td>
+            <a href={`/mes-trucs/${el.slug}`}>{el.data.title}</a>{" "}
+          </td>
+          <td>{el.data.description}</td>
+          <td>{el.data.year}</td>
+          <td>{el.data.type}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  thead {
+    text-align: left;
+  }
+  button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  button:hover::after {
+    content: "↓";
+  }
+  .static:not[x-cloack] {
+    display: none;
+  }
+</style>

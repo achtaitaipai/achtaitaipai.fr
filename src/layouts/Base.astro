@@ -1,21 +1,21 @@
 ---
-import 'src/style/index.css'
+import "src/style/index.css";
 export type Props = {
-	title?: string
-}
-const { title } = Astro.props
+  title?: string;
+};
+const { title } = Astro.props;
 ---
 
 <html lang="fr">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title && `${title} - `} Achtaitaipai</title></head
-	>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title && `${title} - `} Achtaitaipai</title></head
+  >
 
-	<body>
-		<slot />
-	</body>
+  <body>
+    <slot />
+  </body>
 </html>
