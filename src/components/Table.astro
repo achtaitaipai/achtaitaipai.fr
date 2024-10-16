@@ -8,15 +8,27 @@ const tableData = stuff
 ---
 
 <table
-  x-data={`{rows:${JSON.stringify(tableData)}, sort(key){this.rows.sort((a,b)=> a[key].toString().localeCompare(b[key].toString(),'fr'))}}`}
+  x-data={`{rows:${JSON.stringify(tableData)}, sort(key, dir=1){this.rows.sort((a,b)=> dir * a[key].toString().localeCompare(b[key].toString(),'fr'))}}`}
   x-show="true"
   style="display:none"
 >
   <thead>
     <tr>
-      <th><button x-on:click="sort('title')">Titre</button></th>
-      <th><button x-on:click="sort('year')">Année</button></th>
-      <th><button x-on:click="sort('type')">Type</button></th>
+      <th x-data="{dir: 1}"
+        ><button x-on:click="sort('title', dir); dir *= -1"
+          >Titre <span x-text="dir > 0 ? '↑' : '↓'"></span></button
+        ></th
+      >
+      <th x-data="{dir: -1}"
+        ><button x-on:click="sort('year', dir); dir *= -1"
+          >Année <span x-text="dir > 0 ? '↑' : '↓'"></span></button
+        ></th
+      >
+      <th x-data="{dir: 1}"
+        ><button x-on:click="sort('type', dir); dir *= -1"
+          >Type <span x-text="dir > 0 ? '↑' : '↓'"></span></button
+        ></th
+      >
       <th>À propos</th>
     </tr>
   </thead>
@@ -72,10 +84,7 @@ const tableData = stuff
     display: flex;
     justify-content: space-between;
   }
-  button:hover::after {
-    content: "↓";
-  }
-  .static:not[x-cloack] {
+  button:not(:hover, :focus-visible) > span {
     display: none;
   }
 </style>

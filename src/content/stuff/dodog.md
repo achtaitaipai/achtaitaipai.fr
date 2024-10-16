@@ -8,5 +8,5 @@ description: >
 
 Un petit jeu dans lequel on joue un chien qui joue. J'avais fait ce jeu en 2021 avec la librairie kaboomjs. En 2024 j'en ai fait une nouvelle version avec odyc.
 
-[La première version](https://achtaitaipai.itch.io/dodog)
-[La seconde version](https://achtaitaipai.github.io/odyc-exemples/games/dodog.html)
+- [La première version](https://achtaitaipai.itch.io/dodog)
+- [La seconde version](https://achtaitaipai.github.io/odyc-exemples/games/dodog.html)
