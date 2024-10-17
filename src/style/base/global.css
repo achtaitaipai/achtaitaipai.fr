@@ -9,6 +9,7 @@ body {
 
 body > * {
   max-inline-size: clamp(20rem, 90vw, 75ch);
+  padding-inline: 0.5rem;
   margin-inline: auto;
 }
 

@@ -80,11 +80,36 @@ const tableData = stuff
     padding: 0;
     border: 0;
     font: inherit;
+    color: inherit;
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
   button:not(:hover, :focus-visible) > span {
     display: none;
+  }
+  @media screen and (width < 30rem) {
+    thead {
+      display: none;
+    }
+
+    th,
+    td {
+      border: 0;
+      padding: 0;
+      display: inline;
+    }
+
+    td:not(:last-child)::after {
+      content: ", ";
+    }
+
+    tr {
+      display: block;
+    }
+
+    tr + tr {
+      margin-block-start: 1em;
+    }
   }
 </style>
