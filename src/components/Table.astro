@@ -36,8 +36,9 @@ const tableData = stuff
     <template x-for="item in rows" x-key="item.slug">
       <tr>
         <td>
-          <a x-bind:href="`/mes-trucs/${item.slug}`" x-text="item.title"></a>
-        </td>
+          <a x-bind:href="`/mes-trucs/${item.slug}`" x-text="item.title"
+          ></a></td
+        >
         <td x-text="item.year"></td>
         <td x-text="item.type"></td>
         <td x-text="item.description"></td>
