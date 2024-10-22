@@ -13,8 +13,7 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-
+  --font-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
   --clr-surface: white;
   --clr-surface-2: #f8f9fa;
   --clr-text: #212529;
@@ -23,7 +22,7 @@
   --clr-mark-bg: #ffe066;
   --clr-danger: #c92a2a;
   --clr-success: #2b8a3e;
-  
+
   --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 
   --underline-offset: 0.125em;
