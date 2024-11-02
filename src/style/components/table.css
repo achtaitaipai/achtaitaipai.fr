@@ -7,6 +7,6 @@ table {
 
 th,
 td {
-  border: 2px solid var(--clr-text);
+  border: 1px dashed var(--clr-text);
   padding: 0.45rem;
 }

@@ -8,6 +8,7 @@ h3,
 h4 {
   max-inline-size: 45ch;
   text-wrap: balance;
+  font-weight: 500;
 }
 
 h1,
