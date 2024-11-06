@@ -10,7 +10,7 @@ export type Props = {
 const { slug } = Astro.props
 const entry = await getEntry('posts', slug)
 const { title, description, date } = entry.data
-const url = `/projets/${entry.slug}`
+const url = `/notes/${entry.slug}`
 ---
 
 <article class="flow">
