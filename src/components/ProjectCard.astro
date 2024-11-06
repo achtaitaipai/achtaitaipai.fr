@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content'
 import { type ValidContentEntrySlug } from 'astro:content'
+import { makeRoute } from 'src/lib/routes'
 
 export type Props = {
 	slug: ValidContentEntrySlug<'projects'>
@@ -9,7 +10,7 @@ export type Props = {
 const { slug } = Astro.props
 const entry = await getEntry('projects', slug)
 const { title, description, year, type } = entry.data
-const url = `/projets/${entry.slug}`
+const url = makeRoute('/projets/[Projects]', { projects: slug })
 ---
 
 <article class="flow">
