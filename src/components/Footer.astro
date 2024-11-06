@@ -1,40 +1,40 @@
 ---
 const links = [
-  ["mailto:bonjour@achtaitaipai.fr", "Mail"],
-  [
-    "https://github.com/achtaitaipai/achtaitaipai.fr/issues/new",
-    "Signaler un bug",
-  ],
-  ["https://github.com/achtaitaipai", "Github"],
-  ["https://www.chess.com/member/rattata-sauvage", "Chess.com"],
-  ["https://www.instagram.com/achtaitaipai/", "Instagram"],
-];
+	['mailto:bonjour@achtaitaipai.fr', 'Mail'],
+	[
+		'https://github.com/achtaitaipai/achtaitaipai.fr/issues/new',
+		'Signaler un bug',
+	],
+	['https://github.com/achtaitaipai', 'Github'],
+	['https://www.chess.com/member/rattata-sauvage', 'Chess.com'],
+	['https://www.instagram.com/achtaitaipai/', 'Instagram'],
+]
 ---
 
 <footer class="container" data-type="large">
-  {
-    links.map(([url, label]) => (
-      <a href={url} class="shade">
-        {label}
-      </a>
-    ))
-  }
+	{
+		links.map(([url, label]) => (
+			<a href={url} class="shade">
+				{label}
+			</a>
+		))
+	}
 </footer>
 
 <style>
-  footer {
-    inline-size: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding-block: var(--space-s);
-    row-gap: var(--space-s);
-    a {
-      font-size: var(--fs--1);
-    }
-    a:not(:last-child)::after {
-      content: "|";
-      color: var(--gray-6);
-      margin-inline: var(--space-2xs);
-    }
-  }
+	footer {
+		inline-size: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		padding-block: var(--space-s);
+		row-gap: var(--space-s);
+		a {
+			font-size: var(--fs--1);
+		}
+		a:not(:last-child)::after {
+			content: '|';
+			color: var(--gray-6);
+			margin-inline: var(--space-2xs);
+		}
+	}
 </style>

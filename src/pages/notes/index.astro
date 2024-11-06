@@ -1,16 +1,16 @@
 ---
-import { getCollection } from "astro:content";
-import PostCard from "src/components/PostCard.astro";
-import Base from "src/layouts/Base.astro";
+import { getCollection } from 'astro:content'
+import PostCard from 'src/components/PostCard.astro'
+import Base from 'src/layouts/Base.astro'
 
-const projects = (await getCollection("posts")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const projects = (await getCollection('posts')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+)
 ---
 
 <Base title="Bonjour">
-  <h1>Projets</h1>
-  <div class="region flow">
-    {projects.map((el) => <PostCard slug={el.slug} />)}
-  </div>
+	<h1>Projets</h1>
+	<div class="region flow">
+		{projects.map((el) => <PostCard slug={el.slug} />)}
+	</div>
 </Base>
