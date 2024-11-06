@@ -11,7 +11,7 @@ export const getStaticPaths = (async () => {
 	}))
 }) satisfies GetStaticPaths
 
-const { truc: slug } = Astro.params
+const { slug } = Astro.params
 const entry = await getEntry('projects', slug)
 const { Content } = await entry.render()
 ---
