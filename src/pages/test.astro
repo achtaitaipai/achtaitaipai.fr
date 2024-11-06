@@ -1,0 +1,23 @@
+---
+import Base from 'src/layouts/Base.astro'
+export const prerender = false
+let text = ''
+if (Astro.request.method === 'POST') {
+	try {
+		const data = await Astro.request.formData()
+		text = Astro.clientAddress
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message)
+		}
+	}
+}
+---
+
+<Base>
+	{text}
+	<form method="post">
+		<input type="text" name="text" />
+		<button>Envoyer</button>
+	</form>
+</Base>
