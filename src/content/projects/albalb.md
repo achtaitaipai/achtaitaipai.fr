@@ -4,6 +4,7 @@ year: 2023
 type: Outil
 description: >
   Je me suis demandé ce qui se passerait si on calculait les mots.
+highlight: true
 ---
 
 [Albalb](https://achtaitaipai.github.io/albalb/) est un langage d'expression qui permet de manipuler des chaînes de caractères.

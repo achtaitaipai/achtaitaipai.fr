@@ -4,6 +4,7 @@ year: 2024
 type: Outil
 description: >
   Une librairie et un site pour coder des jeux simplement.
+highlight: true
 ---
 
 Odyc est une librairie javascript et un site internet qui permettent de créer rapidement et simplement des petits jeux.

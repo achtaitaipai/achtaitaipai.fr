@@ -1,0 +1,16 @@
+---
+import { getCollection } from "astro:content";
+import ProjectCard from "src/components/ProjectCard.astro";
+import Base from "src/layouts/Base.astro";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => b.data.year - a.data.year,
+);
+---
+
+<Base title="Bonjour">
+  <h1>Projets</h1>
+  <div class="region flow">
+    {projects.map((el) => <ProjectCard slug={el.slug} />)}
+  </div>
+</Base>

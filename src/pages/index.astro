@@ -1,19 +1,15 @@
 ---
+import { getCollection } from "astro:content";
+import ProjectCard from "src/components/ProjectCard.astro";
 import Base from "src/layouts/Base.astro";
-import "src/style/index.css";
-import { getWeatherData } from "src/lib/meteo.ts";
-import Table from "src/components/Table.astro";
 
-const now = new Intl.DateTimeFormat("fr-FR", {
-  dateStyle: "long",
-  timeStyle: "short",
-  timeZone: "Europe/Paris",
-}).format(Date.now());
-const weatherData = await getWeatherData();
+const projects = (await getCollection("projects")).filter(
+  (el) => el.data.highlight === true,
+).sort((a,b)=>b.data.year - a.data.year)
 ---
 
 <Base title="Bonjour">
-  <section>
+  <section class="flow">
     <h1>Bonjour</h1>
     <p>
       Je m'appelle Charles. Je bricole des petits jeux, des outils, des sites
@@ -23,32 +19,21 @@ const weatherData = await getWeatherData();
       J'aimerai plus de sites indépendants, que les gens reprennent le contrôle
       sur la façon dont ils montrent ce qu'ils font.
     </p>
-    <p>
-      Vous pouvez m'écrire à <a href="mailto:bonjour@achtaitaipai.fr"
-        >bonjour@achtaitaipai.fr</a
-      >, me défier aux échecs sur <a
-        href="https://www.chess.com/member/rattata-sauvage">chess.com</a
-      > et lire mon code sur <a href="https://github.com/achtaitaipai">github</a
-      >.
-    </p>
-    <p>
-      Ce site a été déployé pour la dernière fois le {now}, il faisait {
-        weatherData.temperature
-      }°c {weatherData.meteoStatus && ` et ${weatherData.meteoStatus}.`}
-    </p>
-  </section>
-  <section>
     <h2>Maintenant</h2>
     <p>
-      Actuellement, je gagne ma vie en développant des sites internets. Sur mon
-      temps libre, je travaille principalement sur Odyc. Une librairie et un
-      site internet pour permettre à qui le veut de coder des petits jeux vidéo.
-      Lorsque l'occasion se présente, j'anime des ateliers sur la création
-      numérique.
+      Je gagne ma vie en développant des sites internets. Sur mon temps libre,
+      je travaille principalement sur <a href="https://odyc.dev">Odyc</a>. Une
+      librairie et un site internet pour permettre à qui le veut de coder des
+      petits jeux vidéo. Lorsque l'occasion se présente, j'anime des ateliers
+      sur la création numérique.
     </p>
+    <hr />
   </section>
-  <section>
-    <h2>Mes trucs</h2>
-    <Table />
+  <section class="flow">
+    <h2>Projets</h2>
+    <div class="region flow">
+      {projects.map((el) => <ProjectCard slug={el.slug} />)}
+      <a href="/projets" class="link">&rightarrow; Tous les projets</a>
+    </div>
   </section>
 </Base>
